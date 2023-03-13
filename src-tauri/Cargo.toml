@@ -1,9 +1,9 @@
 [package]
-name = "oxide"
-version = "0.0.0"
+name = "polyphony"
+version = "0.0.1"
 description = "A Tauri App"
-authors = ["you"]
-license = ""
+authors = ["bitfl0wer"]
+license = "GPL-3"
 repository = ""
 edition = "2021"
 
