@@ -1,3 +1,3 @@
-# Fosscord Oxide
+# Polyphony
 
-A Fosscord Client written in Rust with Tauri
+A multi-instance, Discord/Fosscord API compatible chat client, written in Rust and TypeScript using Tauri.
