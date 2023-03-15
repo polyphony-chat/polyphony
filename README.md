@@ -15,7 +15,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/bitfl0wer/Polyphony">
-    <img src="images/polyphony.png" alt="Logo" width="80" height="80">
+    <img src="images/polyphony.png" alt="Logo" width="128" height="128">
   </a>
 
 <h3 align="center">Polyphony</h3>
@@ -200,7 +200,7 @@ Project Link: [https://github.com/bitfl0wer/Polyphony](https://github.com/bitfl0
 [issues-shield]: https://img.shields.io/github/issues/bitfl0wer/Polyphony.svg?style=plastic
 [issues-url]: https://github.com/bitfl0wer/Polyphony/issues
 [license-shield]: https://img.shields.io/github/license/bitfl0wer/Polyphony.svg?style=plastic
-[license-url]: https://github.com/bitfl0wer/Polyphony/blob/master/LICENSE.txt
+[license-url]: https://github.com/bitfl0wer/Polyphony/blob/master/LICENSE
 [Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=plastic&logo=svelte&logoColor=FF3E00
 [Svelte-url]: https://svelte.dev/
 [Rust]: https://img.shields.io/badge/Rust-orange?style=plastic&logo=rust
