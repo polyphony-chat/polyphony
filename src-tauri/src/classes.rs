@@ -1,15 +1,12 @@
+use backend::Backend;
+
 pub mod classes {
     pub enum InstanceType {
         Fosscord,
         Discord,
     }
 
-    trait Backend {
-        // The backend trait will define all needed functions/behaviour for the client to
-        // communicate with the backend. This will be used to abstract away the backend
-    }
-
-    struct BackendConnection<B: Backend> {}
+    struct BackendConnection<B: backend::Backend> {}
 
     struct Instance {
         name: String,
