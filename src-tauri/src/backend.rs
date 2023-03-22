@@ -7,4 +7,20 @@ pub mod backend {
         /// The backend object.
         fn new() -> Self;
     }
+
+    struct FosscordBackend {}
+
+    struct DiscordBackend {}
+
+    impl Backend for FosscordBackend {
+        fn new() -> Self {
+            FosscordBackend {}
+        }
+    }
+
+    impl Backend for DiscordBackend {
+        fn new() -> Self {
+            DiscordBackend {}
+        }
+    }
 }
