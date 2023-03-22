@@ -1,19 +1,5 @@
-use backend::Backend;
-
 pub mod classes {
-    pub enum InstanceType {
-        Fosscord,
-        Discord,
-    }
-
-    struct BackendConnection<B: backend::Backend> {}
-
-    struct Instance {
-        name: String,
-        url: String,
-        instance: InstanceType,
-        connection: BackendConnection,
-    }
+    use crate::instance::instance::Instance;
 
     struct User {
         id: u64,
