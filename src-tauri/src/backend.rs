@@ -1,6 +1,6 @@
 pub mod backend {
 
-    trait Backend {
+    pub trait Backend {
         // The backend trait will define all needed functions/behaviour for the client to
         // communicate with the backend. This will be used to abstract away the backend
 
@@ -8,9 +8,9 @@ pub mod backend {
         fn new() -> Self;
     }
 
-    struct FosscordBackend {}
+    pub struct FosscordBackend {}
 
-    struct DiscordBackend {}
+    pub struct DiscordBackend {}
 
     impl Backend for FosscordBackend {
         fn new() -> Self {

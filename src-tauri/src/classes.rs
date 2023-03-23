@@ -1,21 +1,10 @@
-use backend::Backend;
-
 pub mod classes {
-    pub enum InstanceType {
-        Fosscord,
-        Discord,
-    }
+    use crate::{backend::backend::Backend, instance::instance::Instance};
 
-    struct BackendConnection<B: backend::Backend> {}
-
-    struct Instance {
-        name: String,
-        url: String,
-        instance: InstanceType,
-        connection: BackendConnection,
-    }
-
-    struct User {
+    struct User<B>
+    where
+        B: Backend,
+    {
         id: u64,
         username: String,
         discriminator: String,
@@ -31,6 +20,6 @@ pub mod classes {
         flags: u64,
         premium_type: u8,
         public_flags: u64,
-        instance: Instance,
+        instance: Instance<B>,
     }
 }
