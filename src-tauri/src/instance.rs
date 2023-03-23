@@ -1,6 +1,5 @@
 pub mod instance {
     use crate::backend::backend::Backend;
-    use crate::backendfactory::backend_factory::BackendFactory;
 
     pub enum InstanceType {
         Fosscord,
@@ -17,9 +16,8 @@ pub mod instance {
         backend: B,
     }
 
-    impl<B> Instance<B> {
-        fn new(name: String, url: String, instance: InstanceType) -> Self {
-            let backend = BackendFactory::create_backend(instance);
+    impl<B: Backend> Instance<B> {
+        fn new(name: String, url: String, instance: InstanceType, backend: B) -> Instance<B> {
             Self {
                 name,
                 url,
