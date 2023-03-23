@@ -2,7 +2,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 pub mod backend;
-pub mod backendfactory;
 pub mod classes;
 pub mod instance;
 
