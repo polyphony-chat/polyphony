@@ -61,9 +61,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<!-- TODO>
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
--->
+![Product Mockup](images/mockup.png)
+<cite>*A mockup of the Polyphony client.*</cite>
 
 Polyphony will be a multi-instance, Discord/Fosscord API-compatible chat client, written in Rust and Svelte (TypeScript) using Tauri. The three goals of this project are ease-of-use, user experience and performance.
 
