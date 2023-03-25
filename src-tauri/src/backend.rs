@@ -1,6 +1,7 @@
 pub mod backend {
     use crate::auth::auth;
     use crate::auth::auth::{LoginParams, RegisterParams};
+
     #[async_trait::async_trait]
     pub trait Backend {
         /// The backend trait will define all needed functions/behaviour for the client to
@@ -11,6 +12,8 @@ pub mod backend {
         async fn check_health(&self) -> bool;
         async fn perform_register(&self, params: RegisterParams) -> String;
         async fn perform_login(&self, params: LoginParams) -> String;
+        fn get_instance_url(&self) -> String;
+        fn get_instance_type(&self) -> String;
     }
 
     pub struct FosscordBackend {
@@ -29,6 +32,14 @@ pub mod backend {
                 instance_url: instance_url,
                 instance_type: String::from("fosscord"),
             }
+        }
+
+        fn get_instance_url(&self) -> String {
+            self.instance_url.clone()
+        }
+
+        fn get_instance_type(&self) -> String {
+            self.instance_type.clone()
         }
 
         async fn check_health(&self) -> bool {
