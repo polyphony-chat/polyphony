@@ -9,7 +9,6 @@ use crate::backend::backend::Backend;
 use crate::backend::backend::FosscordBackend;
 use crate::instance::instance::Instance;
 use crate::instance::instance::InstanceType;
-use tokio::runtime::Runtime;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
@@ -18,16 +17,13 @@ fn greet(name: &str) -> String {
 }
 
 fn main() {
-    let rt = Runtime::new().unwrap();
-
     let instance: Instance<FosscordBackend> = Instance::new(
         String::from("Local Fosscord Instance"),
         String::from("http://localhost:3001"),
         InstanceType::Fosscord,
         FosscordBackend::new(String::from("http://localhost:3001")),
     );
-
-    rt.block_on(async {
+    tauri::async_runtime::block_on(async {
         println!(
             "Instance online: {}",
             instance.conn.check_health().await.to_string()
