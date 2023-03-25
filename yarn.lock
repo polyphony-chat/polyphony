@@ -751,6 +751,12 @@ svelte@^3.54.0:
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.56.0.tgz#0fe159e2e342cc3d430c7ff219315d1ea681c7b4"
   integrity sha512-LvXiJbjdvJKwB/0CQyYpDX0q+hFqCyWmybzC2G6eK1tJJA/RSRCytTfNmjHv+RHlLuA70vWG7nXp6gbeErYvRA==
 
+"tauri-plugin-websocket-api@https://github.com/tauri-apps/tauri-plugin-websocket":
+  version "0.0.0"
+  resolved "https://github.com/tauri-apps/tauri-plugin-websocket#ee8a3465278043d8bfa09f5d79fd9f23bf2a5aa9"
+  dependencies:
+    "@tauri-apps/api" "^1.2.0"
+
 to-regex-range@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/to-regex-range/-/to-regex-range-5.0.1.tgz#1648c44aae7c8d988a326018ed72f5b4dd0392e4"
