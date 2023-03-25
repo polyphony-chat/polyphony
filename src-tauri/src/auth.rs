@@ -23,10 +23,10 @@ pub mod auth {
     }
 
     pub async fn register(backend_object: &impl Backend, params: RegisterParams) -> String {
-        return String::from("Hello");
+        return String::from("Hello"); //TODO: Implement this
     }
 
     pub async fn login(backend_object: &impl Backend, params: LoginParams) -> String {
-        return String::from("Hello");
+        return String::from("Hello"); //TODO: Implement this
     }
 }
