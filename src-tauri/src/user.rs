@@ -1,4 +1,4 @@
-pub mod classes {
+pub mod user {
     use crate::{backend::backend::Backend, instance::instance::Instance};
 
     struct User<B>

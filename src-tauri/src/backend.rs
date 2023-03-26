@@ -1,4 +1,6 @@
 pub mod backend {
+    use crate::auth::auth;
+    use crate::auth::auth::{LoginParams, RegisterParams};
 
     #[async_trait::async_trait]
     pub trait Backend {
@@ -8,10 +10,15 @@ pub mod backend {
         /// The backend object.
         fn new(instance_url: String) -> Self;
         async fn check_health(&self) -> bool;
+        async fn perform_register(&self, params: RegisterParams) -> String;
+        async fn perform_login(&self, params: LoginParams) -> String;
+        fn get_instance_url(&self) -> String;
+        fn get_instance_type(&self) -> String;
     }
 
     pub struct FosscordBackend {
         instance_url: String,
+        instance_type: String,
     }
 
     /*     pub struct DiscordBackend {
@@ -23,7 +30,16 @@ pub mod backend {
         fn new(instance_url: String) -> Self {
             FosscordBackend {
                 instance_url: instance_url,
+                instance_type: String::from("fosscord"),
             }
+        }
+
+        fn get_instance_url(&self) -> String {
+            self.instance_url.clone()
+        }
+
+        fn get_instance_type(&self) -> String {
+            self.instance_type.clone()
         }
 
         async fn check_health(&self) -> bool {
@@ -42,13 +58,13 @@ pub mod backend {
                 }
             }
         }
-    }
 
-    /*  impl Backend for DiscordBackend {
-        fn new(instance_url: String) -> Self {
-            DiscordBackend {
-                instance_url: instance_url,
-            }
+        async fn perform_register(&self, params: RegisterParams) -> String {
+            auth::register(self, params).await
         }
-    } */
+
+        async fn perform_login(&self, params: LoginParams) -> String {
+            auth::login(self, params).await
+        }
+    }
 }

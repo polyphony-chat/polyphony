@@ -10,19 +10,19 @@ pub mod instance {
     where
         B: Backend,
     {
-        name: String,
-        url: String,
-        instance: InstanceType,
-        backend: B,
+        pub name: String,
+        pub url: String,
+        pub instance: InstanceType,
+        pub conn: B,
     }
 
     impl<B: Backend> Instance<B> {
-        fn new(name: String, url: String, instance: InstanceType, backend: B) -> Instance<B> {
+        pub fn new(name: String, url: String, instance: InstanceType, conn: B) -> Instance<B> {
             Self {
                 name,
                 url,
                 instance,
-                backend,
+                conn,
             }
         }
     }
