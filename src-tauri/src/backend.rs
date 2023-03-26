@@ -1,7 +1,7 @@
 pub mod backend {
     use crate::auth::auth;
     use crate::auth::auth::{LoginParams, RegisterParams};
-    use serenity;
+    use reqwest::Client;
 
     #[async_trait::async_trait]
     pub trait Backend {
@@ -18,6 +18,7 @@ pub mod backend {
 
     pub struct FosscordBackend {
         instance_url: String,
+        http_client: Client,
     }
 
     /*     pub struct DiscordBackend {
@@ -27,8 +28,10 @@ pub mod backend {
     #[async_trait::async_trait]
     impl Backend for FosscordBackend {
         fn new(instance_url: String) -> Self {
+            let client: Client = Client::new();
             FosscordBackend {
                 instance_url: instance_url,
+                http_client: client,
             }
         }
 
