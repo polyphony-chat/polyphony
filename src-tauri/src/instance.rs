@@ -22,7 +22,7 @@ pub mod instance {
             let url = match Url::parse(&url) {
                 Ok(url) => url,
                 Err(ParseError::RelativeUrlWithoutBase) => {
-                    let url = format!("https://{}", url);
+                    let url = format!("http://{}", url);
                     Url::parse(&url).unwrap()
                 }
                 Err(_) => panic!("Invalid URL"),
