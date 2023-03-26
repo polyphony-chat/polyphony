@@ -11,14 +11,14 @@ pub mod backend {
         /// The backend object.
         fn new(instance_url: String) -> Self;
         async fn check_health(&self) -> bool;
-        async fn perform_register(&self, params: RegisterParams) -> String;
-        async fn perform_login(&self, params: LoginParams) -> String;
+        async fn register(&self, params: RegisterParams) -> String;
+        async fn login(&self, params: LoginParams) -> String;
         fn get_instance_url(&self) -> String;
     }
 
     pub struct FosscordBackend {
-        instance_url: String,
-        http_client: Client,
+        pub instance_url: String,
+        pub http_client: Client,
     }
 
     /*     pub struct DiscordBackend {
@@ -56,12 +56,12 @@ pub mod backend {
             }
         }
 
-        async fn perform_register(&self, params: RegisterParams) -> String {
-            auth::register(self, params).await
+        async fn register(&self, params: RegisterParams) -> String {
+            auth::register_fosscord(self, params).await
         }
 
-        async fn perform_login(&self, params: LoginParams) -> String {
-            auth::login(self, params).await
+        async fn login(&self, params: LoginParams) -> String {
+            auth::login_fosscord(self, params).await
         }
     }
 }
