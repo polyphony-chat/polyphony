@@ -149,6 +149,8 @@ See the [open issues](https://github.com/polyphony-chat/client/issues) for a ful
 <!-- CONTRIBUTING -->
 ## Contributing
 
+Read: [Polyphony Design and collaboration guidelines](https://github.com/polyphony-chat/client/wiki/Design-Guidelines-for-collaborating-on-Polyphony)
+
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
