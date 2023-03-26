@@ -1,6 +1,7 @@
 pub mod backend {
     use crate::auth::auth;
     use crate::auth::auth::{LoginParams, RegisterParams};
+    use serenity;
 
     #[async_trait::async_trait]
     pub trait Backend {
@@ -13,12 +14,10 @@ pub mod backend {
         async fn perform_register(&self, params: RegisterParams) -> String;
         async fn perform_login(&self, params: LoginParams) -> String;
         fn get_instance_url(&self) -> String;
-        fn get_instance_type(&self) -> String;
     }
 
     pub struct FosscordBackend {
         instance_url: String,
-        instance_type: String,
     }
 
     /*     pub struct DiscordBackend {
@@ -30,16 +29,11 @@ pub mod backend {
         fn new(instance_url: String) -> Self {
             FosscordBackend {
                 instance_url: instance_url,
-                instance_type: String::from("fosscord"),
             }
         }
 
         fn get_instance_url(&self) -> String {
             self.instance_url.clone()
-        }
-
-        fn get_instance_type(&self) -> String {
-            self.instance_type.clone()
         }
 
         async fn check_health(&self) -> bool {
