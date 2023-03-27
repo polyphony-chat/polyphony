@@ -5,6 +5,7 @@ pub mod backend;
 pub mod instance;
 pub mod user;
 
+use crate::auth::auth as authcrate;
 use crate::backend::backend::Backend;
 use crate::backend::backend::FosscordBackend;
 use crate::instance::instance::Instance;
@@ -25,13 +26,29 @@ async fn main() {
         FosscordBackend::new(String::from("http://localhost:3001")),
     );
 
+    let register: authcrate::RegisterParams = authcrate::RegisterParams {
+        email: "test1@mailprovider.com".to_string(),
+        password: "Unimportant123##1".to_string(),
+        username: "Test1".to_string(),
+        consent: true,
+        fingerprint: "whatdoiputhere1972346789127890341".to_string(),
+        date_of_birth: "2000-01-01".to_string(),
+        promotional_email_opt_in: false,
+        invite: None,
+        gift_code_sku_id: None,
+        captcha_key: None,
+    };
+
+    let reg_resp = authcrate::register_fosscord(&instance.conn, register).await;
+
     println!(
         "Instance online: {}",
         instance.conn.check_health().await.to_string()
     );
 
+    println!("Registration: {}", reg_resp);
+
     tauri::Builder::default()
-        .plugin(tauri_plugin_websocket::init())
         .invoke_handler(tauri::generate_handler![greet])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

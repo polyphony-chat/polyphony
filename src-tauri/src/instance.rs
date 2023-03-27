@@ -1,5 +1,6 @@
 pub mod instance {
     use crate::backend::backend::Backend;
+    use url::{ParseError, Url};
 
     pub enum InstanceType {
         Fosscord,
@@ -18,6 +19,15 @@ pub mod instance {
 
     impl<B: Backend> Instance<B> {
         pub fn new(name: String, url: String, instance: InstanceType, conn: B) -> Instance<B> {
+            let url = match Url::parse(&url) {
+                Ok(url) => url,
+                Err(ParseError::RelativeUrlWithoutBase) => {
+                    let url = format!("http://{}", url);
+                    Url::parse(&url).unwrap()
+                }
+                Err(_) => panic!("Invalid URL"),
+            };
+            let url = url.to_string();
             Self {
                 name,
                 url,
