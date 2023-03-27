@@ -84,21 +84,44 @@ Ideally, you will be able to connect to multiple Fosscord instances at the same 
 
 <!-- GETTING STARTED -->
 
-<!-- TODO>
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+To set up a local development environment, follow these simple steps. This guide assumes you are using Linux.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+Install the rust toolchain and cargo.
 
-* npm
+   ```sh
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+   ```
+
+Install Node.js v19 and yarn
+
+Arch Linux:
+
+   ```sh
+   sudo pacman -S nodejs yarn
+   ```
+
+Debian/Ubuntu:
+
+   ```sh
+   curl -fsSL https://deb.nodesource.com/setup_19.x | sudo -E bash -
+   sudo apt-get install -y nodejs
+   sudo npm install -g yarn
+   ```
+
+Clone this project and install dependencies
 
   ```sh
-  npm install npm@latest -g
+  git clone https://github.com/polyphony-chat/client.git
+  cd client
+  yarn install
   ```
+
+You should now be able to run the client with `yarn tauri dev` from the project root.
+You can independently build and run the Rust backend with `cargo run` from the `src-tauri` directory.
 
 ### Installation
 
