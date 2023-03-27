@@ -46,7 +46,6 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
     <li><a href="#roadmap">Roadmap</a></li>
@@ -121,27 +120,6 @@ Clone this project and install dependencies
 
 You should now be able to run the client with `yarn tauri dev` from the project root.
 You can independently build and run the Rust backend with `cargo run` from the `src-tauri` directory.
-
-### Installation
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-
-   ```sh
-   git clone https://github.com/polyphony-chat/client.git
-   ```
-
-3. Install NPM packages
-
-   ```sh
-   npm install
-   ```
-
-4. Enter your API in `config.js`
-
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
