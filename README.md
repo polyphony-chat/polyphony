@@ -49,7 +49,6 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -84,21 +83,44 @@ Ideally, you will be able to connect to multiple Fosscord instances at the same 
 
 <!-- GETTING STARTED -->
 
-<!-- TODO>
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+To set up a local development environment, follow these simple steps. This guide assumes you are using Linux.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+Install the rust toolchain and cargo.
 
-* npm
+   ```sh
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+   ```
+
+Install Node.js v19 and yarn
+
+Arch Linux:
+
+   ```sh
+   sudo pacman -S nodejs yarn
+   ```
+
+Debian/Ubuntu:
+
+   ```sh
+   curl -fsSL https://deb.nodesource.com/setup_19.x | sudo -E bash -
+   sudo apt-get install -y nodejs
+   sudo npm install -g yarn
+   ```
+
+Clone this project and install dependencies
 
   ```sh
-  npm install npm@latest -g
+  git clone https://github.com/polyphony-chat/client.git
+  cd client
+  yarn install
   ```
+
+You should now be able to run the client with `yarn tauri dev` from the project root.
+You can independently build and run the Rust backend with `cargo run` from the `src-tauri` directory.
 
 ### Installation
 
@@ -123,24 +145,7 @@ This is an example of how to list things you need to use the software and how to
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- USAGE EXAMPLES -->
-<!-- TODO>
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ROADMAP -->
 ## Roadmap
-<!-- TODO>
-
-* [ ] Feature 1
-* [ ] Feature 2
-* [ ] Feature 3
-  * [ ] Nested Feature
 
 See the [open issues](https://github.com/polyphony-chat/client/issues) for a full list of proposed features (and known issues).
 
@@ -156,11 +161,15 @@ Contributions are what make the open source community such an amazing place to l
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+If you want to contribute code, please follow these steps:
+
+1. Find a [feature or issue you want to work on](https://github.com/polyphony-chat/client/issues). If you want to work on something that is not listed, open an issue and we will discuss it.
+2. Let it be known in the issue that you are working on it. This is to avoid duplicate work, especially since currently this project is still in its early stages and there are not many contributors.
+3. Fork the Project
+4. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+5. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+6. Push to the Branch (`git push origin feature/AmazingFeature`)
+7. Open a Pull Request
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
