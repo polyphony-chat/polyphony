@@ -27,11 +27,11 @@ async fn main() {
     );
 
     let register: authcrate::RegisterParams = authcrate::RegisterParams {
-        email: "test1@mailprovider.com".to_string(),
+        email: "test4@mailprovider.com".to_string(),
         password: "Unimportant123##1".to_string(),
-        username: "Test1".to_string(),
+        username: "Test4".to_string(),
         consent: true,
-        fingerprint: "whatdoiputhere1972346789127890341".to_string(),
+        fingerprint: "whatdoiputhere1972346789127890343".to_string(),
         date_of_birth: "2000-01-01".to_string(),
         promotional_email_opt_in: false,
         invite: None,
@@ -39,7 +39,18 @@ async fn main() {
         captcha_key: None,
     };
 
+    let login: authcrate::LoginParams = authcrate::LoginParams {
+        login: register.email.clone(),
+        password: register.password.clone(),
+        undelete: false,
+        captcha_key: None,
+        login_source: None,
+        gift_code_sku_id: None,
+    };
+
     let reg_resp = authcrate::register_fosscord(&instance.conn, register).await;
+
+    let login_resp = authcrate::login_fosscord(&instance.conn, login).await;
 
     println!(
         "Instance online: {}",
@@ -47,6 +58,8 @@ async fn main() {
     );
 
     println!("Registration: {}", reg_resp);
+
+    println!("Login: {}", login_resp);
 
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![greet])
