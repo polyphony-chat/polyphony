@@ -1,5 +1,6 @@
 pub mod auth {
-    use crate::backend::backend::FosscordBackend;
+
+    use crate::backend::backend::SpacebarBackend;
     use reqwest::{Client, Error, RequestBuilder, Response};
     use serde::{Deserialize, Serialize};
 
@@ -28,8 +29,8 @@ pub mod auth {
         pub gift_code_sku_id: Option<String>,
     }
 
-    pub async fn register_fosscord(
-        backend_object: &FosscordBackend,
+    pub async fn register_spacebar(
+        backend_object: &SpacebarBackend,
         params: RegisterParams,
     ) -> String {
         let json: String = serde_json::to_string(&params).unwrap();
@@ -51,7 +52,23 @@ pub mod auth {
         }
     }
 
-    pub async fn login_fosscord(backend_object: &FosscordBackend, params: LoginParams) -> String {
-        return String::from("Hello"); //TODO: Implement this
+    pub async fn login_spacebar(backend_object: &SpacebarBackend, params: LoginParams) -> String {
+        let json: String = serde_json::to_string(&params).unwrap();
+        let client: &Client = &backend_object.http_client;
+        let request: RequestBuilder = client
+            .post(backend_object.instance_url.clone() + "/api/auth/login/")
+            .body(json);
+        let result: Result<Response, Error> = request.send().await;
+        match result {
+            Ok(result) => match result.text().await {
+                Ok(body) => body,
+                Err(error) => {
+                    panic!("Something went wrong. {}", error);
+                }
+            },
+            Err(error) => {
+                panic!("An error occured while logging in. {}", error)
+            }
+        }
     }
 }

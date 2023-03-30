@@ -16,7 +16,7 @@ pub mod backend {
         fn get_instance_url(&self) -> String;
     }
 
-    pub struct FosscordBackend {
+    pub struct SpacebarBackend {
         pub instance_url: String,
         pub http_client: Client,
     }
@@ -26,10 +26,10 @@ pub mod backend {
        }
     */
     #[async_trait::async_trait]
-    impl Backend for FosscordBackend {
+    impl Backend for SpacebarBackend {
         fn new(instance_url: String) -> Self {
             let client: Client = Client::new();
-            FosscordBackend {
+            SpacebarBackend {
                 instance_url: instance_url,
                 http_client: client,
             }
@@ -57,11 +57,11 @@ pub mod backend {
         }
 
         async fn register(&self, params: RegisterParams) -> String {
-            auth::register_fosscord(self, params).await
+            auth::register_spacebar(self, params).await
         }
 
         async fn login(&self, params: LoginParams) -> String {
-            auth::login_fosscord(self, params).await
+            auth::login_spacebar(self, params).await
         }
     }
 }

@@ -7,7 +7,7 @@ pub mod user;
 
 use crate::auth::auth as authcrate;
 use crate::backend::backend::Backend;
-use crate::backend::backend::FosscordBackend;
+use crate::backend::backend::SpacebarBackend;
 use crate::instance::instance::Instance;
 use crate::instance::instance::InstanceType;
 
@@ -19,11 +19,11 @@ fn greet(name: &str) -> String {
 
 #[tokio::main]
 async fn main() {
-    let instance: Instance<FosscordBackend> = Instance::new(
-        String::from("Local Fosscord Instance"),
+    let instance: Instance<SpacebarBackend> = Instance::new(
+        String::from("Local Spacebar Instance"),
         String::from("http://localhost:3001"),
-        InstanceType::Fosscord,
-        FosscordBackend::new(String::from("http://localhost:3001")),
+        InstanceType::Spacebar,
+        SpacebarBackend::new(String::from("http://localhost:3001")),
     );
 
     let register: authcrate::RegisterParams = authcrate::RegisterParams {
@@ -39,7 +39,9 @@ async fn main() {
         captcha_key: None,
     };
 
-    let reg_resp = authcrate::register_fosscord(&instance.conn, register).await;
+    let reg_resp = authcrate::register_spacebar(&instance.conn, register).await;
+
+    let login_resp = authcrate::login_spacebar(&instance.conn, login).await;
 
     println!(
         "Instance online: {}",

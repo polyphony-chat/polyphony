@@ -21,7 +21,7 @@
 <h3 align="center">Polyphony</h3>
 
   <p align="center">
-    A multi-instance, Discord/Fosscord API-compatible chat client, written in Rust and Svelte (TypeScript) using Tauri.
+    A multi-instance, Discord/Spacebar API-compatible chat client, written in Rust and Svelte (TypeScript) using Tauri.
     <br />
     <a href="https://github.com/polyphony-chat/client"><strong>Explore the docs »</strong></a>
     <br />
@@ -62,13 +62,13 @@
 ![Product Mockup](images/mockup.png)
 <cite>*A mockup of the Polyphony client.*</cite>
 
-Polyphony will be a multi-instance, Discord/Fosscord API-compatible chat client, written in Rust and Svelte (TypeScript) using Tauri. The three goals of this project are ease-of-use, user experience and performance.
+Polyphony will be a multi-instance, Discord/Spacebar API-compatible chat client, written in Rust and Svelte (TypeScript) using Tauri. The three goals of this project are ease-of-use, user experience and performance.
 
-Ideally, you will be able to connect to multiple Fosscord instances at the same time and use the client just like you would expect a regular Discord client to work.
+Ideally, you will be able to connect to multiple Spacebar instances at the same time and use the client just like you would expect a regular Discord client to work.
 
-### Fosscord? What's that?
+### Spacebar? What's that?
 
-[Go read about the Fosscord project here!](https://github.com/fosscord) Fosscord describes itself as "*a free open source selfhostable discord compatible chat, voice and video platform*".
+[Go read about the Spacebar project here!](https://github.com/spacebarchat) Spacebar describes itself as "*a free open source selfhostable discord compatible chat, voice and video platform*".
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

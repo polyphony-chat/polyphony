@@ -3,7 +3,7 @@ pub mod instance {
     use url::{ParseError, Url};
 
     pub enum InstanceType {
-        Fosscord,
+        Spacebar,
         Discord,
     }
 
