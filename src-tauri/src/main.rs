@@ -6,8 +6,8 @@ pub mod instance;
 pub mod user;
 
 use crate::auth::auth as authcrate;
-use crate::backend::backend::Backend;
-use crate::backend::backend::SpacebarBackend;
+use crate::backend::Backend;
+use crate::backend::SpacebarBackend;
 use crate::instance::instance::Instance;
 use crate::instance::instance::InstanceType;
 

@@ -1,5 +1,5 @@
 pub mod instance {
-    use crate::backend::backend::Backend;
+    use crate::backend::Backend;
     use url::{ParseError, Url};
 
     pub enum InstanceType {
