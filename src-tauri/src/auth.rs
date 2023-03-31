@@ -1,6 +1,6 @@
 pub mod auth {
 
-    use crate::backend::backend::SpacebarBackend;
+    use crate::backend::SpacebarBackend;
     use reqwest::{Client, Error, RequestBuilder, Response};
     use serde::{Deserialize, Serialize};
 
