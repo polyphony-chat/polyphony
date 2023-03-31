@@ -1,5 +1,5 @@
 pub mod user {
-    use crate::{backend::backend::Backend, instance::instance::Instance};
+    use crate::{backend::Backend, instance::instance::Instance};
 
     struct User<B>
     where
