@@ -18,7 +18,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build
       run: |
-        cd src/src-tauri/
+        cd src-tauri/
         cargo build --verbose
     #- name: Run tests
     #  run: cargo test --verbose
