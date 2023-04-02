@@ -3,6 +3,7 @@
 
 <div align="center">
 
+[![Build][build-shield]][build-url]
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -179,6 +180,8 @@ Project Link: [https://github.com/polyphony-chat/client](https://github.com/poly
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[build-shield]: https://img.shields.io/github/actions/workflow/status/polyphony-chat/client/rust.yml?style=plastic
+[build-url]: https://github.com/polyphony-chat/client/blob/main/.github/workflows/rust.yml
 [contributors-shield]: https://img.shields.io/github/contributors/polyphony-chat/client.svg?style=plastic
 [contributors-url]: https://github.com/polyphony-chat/client/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/polyphony-chat/client.svg?style=plastic
