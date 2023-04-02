@@ -1,34 +1,42 @@
 pub mod spacebar_backend {
-    use crate::auth::auth;
     use crate::backend::Backend;
+    use crate::backend::URLBundle;
     use reqwest::Client;
+    use serenity::client::ClientBuilder;
+    use serenity::model::gateway::GatewayIntents;
+    use std::sync::{Arc, Mutex};
 
     pub struct SpacebarBackend {
-        pub instance_url: String,
+        urls: URLBundle,
         pub http_client: Client,
+        pub serenity_client: ClientBuilder,
     }
 
-    /*     pub struct DiscordBackend {
-           instance_url: String,
-       }
-    */
     #[async_trait::async_trait]
     impl Backend for SpacebarBackend {
-        fn new(instance_url: String) -> Self {
-            let client: Client = Client::new();
+        fn new(token: String, urls: URLBundle) -> Self {
+            let http_client: Client = Client::new();
+            let intents = GatewayIntents::privileged().union(GatewayIntents::non_privileged());
+            let serenity_client: ClientBuilder = ClientBuilder::new(
+                token,
+                intents,
+                Arc::new(Mutex::new(String::from(urls.get_api().to_owned()))),
+                Arc::new(Mutex::new(String::from(urls.get_cdn().to_owned()))),
+                Arc::new(Mutex::new(String::from(urls.get_wss().to_owned()))),
+            );
             SpacebarBackend {
-                instance_url: instance_url,
-                http_client: client,
+                urls,
+                http_client,
+                serenity_client,
             }
         }
 
-        fn get_instance_url(&self) -> String {
-            self.instance_url.clone()
+        fn get_instance_urls(&self) -> &URLBundle {
+            &self.urls
         }
 
-        async fn check_health(&self) -> bool {
-            let url: String = String::from(&self.instance_url.clone());
-            let resp = reqwest::get(url + "/api/ping").await;
+        async fn check_health(self) -> bool {
+            let resp = reqwest::get(self.urls.get_api().to_owned() + "/api/ping").await;
             match resp {
                 Ok(resp) => {
                     if resp.status() == 200 {
@@ -41,14 +49,6 @@ pub mod spacebar_backend {
                     return false;
                 }
             }
-        }
-
-        async fn register(&self, params: auth::RegisterParams) -> String {
-            auth::register_spacebar(self, params).await
-        }
-
-        async fn login(&self, params: auth::LoginParams) -> String {
-            auth::login_spacebar(self, params).await
         }
     }
 }
