@@ -5,12 +5,6 @@ pub mod backend;
 pub mod instance;
 pub mod user;
 
-use crate::auth::auth as authcrate;
-use crate::backend::Backend;
-use crate::backend::SpacebarBackend;
-use crate::instance::instance::Instance;
-use crate::instance::instance::InstanceType;
-
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -19,48 +13,6 @@ fn greet(name: &str) -> String {
 
 #[tokio::main]
 async fn main() {
-    let instance: Instance<SpacebarBackend> = Instance::new(
-        String::from("Local Spacebar Instance"),
-        String::from("http://localhost:3001"),
-        InstanceType::Spacebar,
-        SpacebarBackend::new(String::from("http://localhost:3001")),
-    );
-
-    let register: authcrate::RegisterParams = authcrate::RegisterParams {
-        email: "test4@mailprovider.com".to_string(),
-        password: "Unimportant123##1".to_string(),
-        username: "Test4".to_string(),
-        consent: true,
-        fingerprint: "whatdoiputhere1972346789127890343".to_string(),
-        date_of_birth: "2000-01-01".to_string(),
-        promotional_email_opt_in: false,
-        invite: None,
-        gift_code_sku_id: None,
-        captcha_key: None,
-    };
-
-    let login: authcrate::LoginParams = authcrate::LoginParams {
-        login: register.email.clone(),
-        password: register.password.clone(),
-        undelete: false,
-        captcha_key: None,
-        login_source: None,
-        gift_code_sku_id: None,
-    };
-
-    let reg_resp = authcrate::register_spacebar(&instance.conn, register).await;
-
-    let login_resp = authcrate::login_spacebar(&instance.conn, login).await;
-
-    println!(
-        "Instance online: {}",
-        instance.conn.check_health().await.to_string()
-    );
-
-    println!("Registration: {}", reg_resp);
-
-    println!("Login: {}", login_resp);
-
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![greet])
         .run(tauri::generate_context!())
