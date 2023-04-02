@@ -1,6 +1,6 @@
 pub mod auth {
 
-    use crate::backend::SpacebarBackend;
+    use crate::backend::{Backend, SpacebarBackend};
     use reqwest::{Client, Error, RequestBuilder, Response};
     use serde::{Deserialize, Serialize};
 
@@ -36,7 +36,7 @@ pub mod auth {
         let json: String = serde_json::to_string(&params).unwrap();
         let client: &Client = &backend_object.http_client;
         let request: RequestBuilder = client
-            .post(backend_object.instance_url.clone() + "/api/auth/register/")
+            .post(backend_object.get_instance_urls().get_api().to_owned() + "/auth/register/")
             .body(json);
         let result: Result<Response, Error> = request.send().await;
         match result {
@@ -54,9 +54,9 @@ pub mod auth {
 
     pub async fn login_spacebar(backend_object: &SpacebarBackend, params: LoginParams) -> String {
         let json: String = serde_json::to_string(&params).unwrap();
-        let client: &Client = &backend_object.http_client;
+        let client = &backend_object.http_client;
         let request: RequestBuilder = client
-            .post(backend_object.instance_url.clone() + "/api/auth/login/")
+            .post(backend_object.get_instance_urls().get_api().to_owned() + "/auth/login/")
             .body(json);
         let result: Result<Response, Error> = request.send().await;
         match result {

@@ -1,16 +1,31 @@
 pub mod backend {
-    use crate::auth::auth::{LoginParams, RegisterParams};
 
+    #[derive(Clone, Default)]
+    pub struct URLBundle {
+        api: String,
+        wss: String,
+        cdn: String,
+    }
+
+    impl URLBundle {
+        pub fn get_api(&self) -> &str {
+            &self.api
+        }
+
+        pub fn get_cdn(&self) -> &str {
+            &self.cdn
+        }
+
+        pub fn get_wss(&self) -> &str {
+            &self.wss
+        }
+    }
     #[async_trait::async_trait]
     pub trait Backend {
         /// The backend trait will define all needed functions/behaviour for the client to
         /// communicate with the backend. This will be used to abstract away the backend
-
-        /// The backend object.
-        fn new(instance_url: String) -> Self;
-        async fn check_health(&self) -> bool;
-        async fn register(&self, params: RegisterParams) -> String;
-        async fn login(&self, params: LoginParams) -> String;
-        fn get_instance_url(&self) -> String;
+        async fn check_health(self) -> bool;
+        fn new(token: String, urls: URLBundle) -> Self;
+        fn get_instance_urls(&self) -> &URLBundle;
     }
 }
