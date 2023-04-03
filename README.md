@@ -15,7 +15,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/polyphony-chat/client">
+  <a href="https://github.com/polyphony-chat/polyphony">
     <img src="images/polyphony.png" alt="Logo" width="128" height="128">
   </a>
 
@@ -24,12 +24,12 @@
   <p align="center">
     A multi-instance, Discord/Spacebar API-compatible chat client, written in Rust and Svelte (TypeScript) using Tauri.
     <br />
-    <a href="https://github.com/polyphony-chat/client"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/polyphony-chat/polyphony"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/polyphony-chat/client/issues">Report Bug</a>
+    <a href="https://github.com/polyphony-chat/polyphony/issues">Report Bug</a>
     ·
-    <a href="https://github.com/polyphony-chat/client/issues">Request Feature</a>
+    <a href="https://github.com/polyphony-chat/polyphony/issues">Request Feature</a>
   </p>
 </div>
 
@@ -114,7 +114,7 @@ Debian/Ubuntu:
 Clone this project and install dependencies
 
   ```sh
-  git clone https://github.com/polyphony-chat/client.git
+  git clone https://github.com/polyphony-chat/polyphony.git
   cd client
   yarn install
   ```
@@ -126,14 +126,14 @@ You can independently build and run the Rust backend with `cargo run` from the `
 
 ## Roadmap
 
-See the [open issues](https://github.com/polyphony-chat/client/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/polyphony-chat/polyphony/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Read: [Polyphony Design and collaboration guidelines](https://github.com/polyphony-chat/client/wiki/Design-Guidelines-for-collaborating-on-Polyphony)
+Read: [Polyphony Design and collaboration guidelines](https://github.com/polyphony-chat/polyphony/wiki/Design-Guidelines-for-collaborating-on-Polyphony)
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -142,7 +142,7 @@ Don't forget to give the project a star! Thanks again!
 
 If you want to contribute code, please follow these steps:
 
-1. Find a [feature or issue you want to work on](https://github.com/polyphony-chat/client/issues). If you want to work on something that is not listed, open an issue and we will discuss it.
+1. Find a [feature or issue you want to work on](https://github.com/polyphony-chat/polyphony/issues). If you want to work on something that is not listed, open an issue and we will discuss it.
 2. Let it be known in the issue that you are working on it. This is to avoid duplicate work, especially since currently this project is still in its early stages and there are not many contributors.
 3. Fork the Project
 4. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -164,7 +164,7 @@ Distributed under the GPLv3 License. See `LICENSE.txt` for more information.
 
 florian@pro-weber.com
 
-Project Link: [https://github.com/polyphony-chat/client](https://github.com/polyphony-chat/client)
+Project Link: [https://github.com/polyphony-chat/polyphony](https://github.com/polyphony-chat/polyphony)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -180,18 +180,18 @@ Project Link: [https://github.com/polyphony-chat/client](https://github.com/poly
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[build-shield]: https://img.shields.io/github/actions/workflow/status/polyphony-chat/client/rust.yml?style=plastic
-[build-url]: https://github.com/polyphony-chat/client/blob/main/.github/workflows/rust.yml
-[contributors-shield]: https://img.shields.io/github/contributors/polyphony-chat/client.svg?style=plastic
-[contributors-url]: https://github.com/polyphony-chat/client/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/polyphony-chat/client.svg?style=plastic
-[forks-url]: https://github.com/polyphony-chat/client/network/members
-[stars-shield]: https://img.shields.io/github/stars/polyphony-chat/client.svg?style=plastic
-[stars-url]: https://github.com/polyphony-chat/client/stargazers
-[issues-shield]: https://img.shields.io/github/issues/polyphony-chat/client.svg?style=plastic
-[issues-url]: https://github.com/polyphony-chat/client/issues
-[license-shield]: https://img.shields.io/github/license/polyphony-chat/client.svg?style=plastic
-[license-url]: https://github.com/polyphony-chat/client/blob/master/LICENSE
+[build-shield]: https://img.shields.io/github/actions/workflow/status/polyphony-chat/polyphony/rust.yml?style=plastic
+[build-url]: https://github.com/polyphony-chat/polyphony/blob/main/.github/workflows/rust.yml
+[contributors-shield]: https://img.shields.io/github/contributors/polyphony-chat/polyphony.svg?style=plastic
+[contributors-url]: https://github.com/polyphony-chat/polyphony/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/polyphony-chat/polyphony.svg?style=plastic
+[forks-url]: https://github.com/polyphony-chat/polyphony/network/members
+[stars-shield]: https://img.shields.io/github/stars/polyphony-chat/polyphony.svg?style=plastic
+[stars-url]: https://github.com/polyphony-chat/polyphony/stargazers
+[issues-shield]: https://img.shields.io/github/issues/polyphony-chat/polyphony.svg?style=plastic
+[issues-url]: https://github.com/polyphony-chat/polyphony/issues
+[license-shield]: https://img.shields.io/github/license/polyphony-chat/polyphony.svg?style=plastic
+[license-url]: https://github.com/polyphony-chat/polyphony/blob/master/LICENSE
 [Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=plastic&logo=svelte&logoColor=FF3E00
 [Svelte-url]: https://svelte.dev/
 [Rust]: https://img.shields.io/badge/Rust-orange?style=plastic&logo=rust
