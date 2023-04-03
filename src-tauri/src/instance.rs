@@ -12,11 +12,11 @@ pub mod instance {
     {
         pub name: String,
         pub urls: URLBundle,
-        pub backend_impl: B,
+        pub connection: B,
     }
 
     impl<B: Backend> Instance<B> {
-        pub fn new(name: String, urls: URLBundle, backend_impl: B) -> Instance<B> {
+        pub fn new(name: String, urls: URLBundle, connection: B) -> Instance<B> {
             let urls = URLBundle::new(
                 urls.get_api().to_string(),
                 urls.get_wss().to_string(),
@@ -25,7 +25,7 @@ pub mod instance {
             Self {
                 name,
                 urls,
-                backend_impl,
+                connection,
             }
         }
     }
