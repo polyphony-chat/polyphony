@@ -1,34 +1,36 @@
 pub mod spacebar_backend {
-    use crate::auth::auth;
     use crate::backend::Backend;
+    use crate::backend::URLBundle;
+    use crate::serenity::serenity as SerenityHandler;
     use reqwest::Client;
+    use serenity::client::Client as SerenityClient;
+    use serenity::model::gateway::GatewayIntents;
 
     pub struct SpacebarBackend {
-        pub instance_url: String,
+        urls: URLBundle,
         pub http_client: Client,
+        pub serenity_client: SerenityClient,
     }
 
-    /*     pub struct DiscordBackend {
-           instance_url: String,
-       }
-    */
     #[async_trait::async_trait]
     impl Backend for SpacebarBackend {
-        fn new(instance_url: String) -> Self {
-            let client: Client = Client::new();
+        async fn new(token: String, urls: URLBundle) -> Self {
+            let http_client: Client = Client::new();
+            let intents = GatewayIntents::privileged().union(GatewayIntents::non_privileged());
+            let serenity_client = SerenityHandler::new(token, intents, &urls).await;
             SpacebarBackend {
-                instance_url: instance_url,
-                http_client: client,
+                urls,
+                http_client,
+                serenity_client,
             }
         }
 
-        fn get_instance_url(&self) -> String {
-            self.instance_url.clone()
+        fn get_instance_urls(&self) -> &URLBundle {
+            &self.urls
         }
 
-        async fn check_health(&self) -> bool {
-            let url: String = String::from(&self.instance_url.clone());
-            let resp = reqwest::get(url + "/api/ping").await;
+        async fn check_health(urls: &URLBundle) -> bool {
+            let resp = reqwest::get(urls.get_api().to_owned() + "ping").await;
             match resp {
                 Ok(resp) => {
                     if resp.status() == 200 {
@@ -41,14 +43,6 @@ pub mod spacebar_backend {
                     return false;
                 }
             }
-        }
-
-        async fn register(&self, params: auth::RegisterParams) -> String {
-            auth::register_spacebar(self, params).await
-        }
-
-        async fn login(&self, params: auth::LoginParams) -> String {
-            auth::login_spacebar(self, params).await
         }
     }
 }

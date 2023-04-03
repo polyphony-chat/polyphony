@@ -1,6 +1,5 @@
 pub mod instance {
-    use crate::backend::Backend;
-    use url::{ParseError, Url};
+    use crate::backend::{Backend, URLBundle};
 
     pub enum InstanceType {
         Spacebar,
@@ -12,27 +11,21 @@ pub mod instance {
         B: Backend,
     {
         pub name: String,
-        pub url: String,
-        pub instance: InstanceType,
-        pub conn: B,
+        pub urls: URLBundle,
+        pub connection: B,
     }
 
     impl<B: Backend> Instance<B> {
-        pub fn new(name: String, url: String, instance: InstanceType, conn: B) -> Instance<B> {
-            let url = match Url::parse(&url) {
-                Ok(url) => url,
-                Err(ParseError::RelativeUrlWithoutBase) => {
-                    let url = format!("http://{}", url);
-                    Url::parse(&url).unwrap()
-                }
-                Err(_) => panic!("Invalid URL"),
-            };
-            let url = url.to_string();
+        pub fn new(name: String, urls: URLBundle, connection: B) -> Instance<B> {
+            let urls = URLBundle::new(
+                urls.get_api().to_string(),
+                urls.get_wss().to_string(),
+                urls.get_cdn().to_string(),
+            );
             Self {
                 name,
-                url,
-                instance,
-                conn,
+                urls,
+                connection,
             }
         }
     }
