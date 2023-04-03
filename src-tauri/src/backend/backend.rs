@@ -48,7 +48,7 @@ pub mod backend {
     pub trait Backend {
         /// The backend trait will define all needed functions/behaviour for the client to
         /// communicate with the backend. This will be used to abstract away the backend
-        fn new(token: String, urls: URLBundle) -> Self;
+        async fn new(token: String, urls: URLBundle) -> Self;
         fn get_instance_urls(&self) -> &URLBundle;
         async fn check_health(urls: &URLBundle) -> bool;
     }

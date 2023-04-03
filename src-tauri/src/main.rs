@@ -3,6 +3,7 @@
 pub mod auth;
 pub mod backend;
 pub mod instance;
+pub mod serenity;
 pub mod user;
 
 use auth::auth::RegisterParams;
@@ -42,11 +43,10 @@ async fn main() {
     )
     .await;
     let instance = Instance::new(
-        String::from("Test Instance"),
+        String::from("Test"),
         urls.clone(),
-        SpacebarBackend::new(token, urls.clone()),
+        SpacebarBackend::new(token, urls.clone()).await,
     );
-
     println!("URL for API: {}", instance.urls.get_api());
     println!("Healthy? {}", SpacebarBackend::check_health(&urls).await);
 
