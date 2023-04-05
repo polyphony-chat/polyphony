@@ -3,11 +3,11 @@
 pub mod auth;
 pub mod backend;
 pub mod instance;
-pub mod serenity;
 pub mod user;
 
 use auth::auth::RegisterParams;
 use backend::{Backend, URLBundle};
+use tokio;
 
 use crate::auth::auth::register_spacebar;
 use crate::backend::SpacebarBackend;
