@@ -1,4 +1,5 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+
 <a name="readme-top"></a>
 
 <div align="center">
@@ -58,10 +59,11 @@
 </details>
 
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 ![Product Mockup](images/mockup.png)
-<cite>*A mockup of the Polyphony client.*</cite>
+<cite>_A mockup of the Polyphony client._</cite>
 
 Polyphony will be a multi-instance, Discord/Spacebar API-compatible chat client, written in Rust and Svelte (TypeScript) using Tauri. The three goals of this project are ease-of-use, user experience and performance.
 
@@ -69,15 +71,15 @@ Ideally, you will be able to connect to multiple Spacebar instances at the same 
 
 ### Spacebar? What's that?
 
-[Go read about the Spacebar project here!](https://github.com/spacebarchat) Spacebar describes itself as "*a free open source selfhostable discord compatible chat, voice and video platform*".
+[Go read about the Spacebar project here!](https://github.com/spacebarchat) Spacebar describes itself as "_a free open source selfhostable discord compatible chat, voice and video platform_".
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 
-[![Svelte][Svelte.dev]][Svelte-url]
-[![Rust]][Rust-url]
-[![Typescript]][Typescript-url]
+[![Svelte][svelte.dev]][svelte-url]
+[![Rust]][rust-url]
+[![Typescript]][typescript-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -85,39 +87,93 @@ Ideally, you will be able to connect to multiple Spacebar instances at the same 
 
 ## Getting Started
 
-To set up a local development environment, follow these simple steps. This guide assumes you are using Linux.
+To set up a local development environment, follow these simple steps.
+No matter which OS you are running, you will need to install `git` to follow these instructions.
 
-### Prerequisites
+ <details>
+   <summary>Linux</summary>
+
+### Prerequisites: Linux
 
 Install the rust toolchain and cargo.
 
-   ```sh
-   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-   ```
+```bash
+curl --proto '=https' --tlsv1.2 -sSf <https://sh.rustup.rs> | sh
+```
 
 Install Node.js v19 and yarn
 
 Arch Linux:
 
-   ```sh
-   sudo pacman -S nodejs yarn
-   ```
+```bash
+sudo pacman -S nodejs yarn
+```
 
 Debian/Ubuntu:
 
-   ```sh
-   curl -fsSL https://deb.nodesource.com/setup_19.x | sudo -E bash -
-   sudo apt-get install -y nodejs
-   sudo npm install -g yarn
-   ```
+```bash
+curl -fsSL <https://deb.nodesource.com/setup_19.x> | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo npm install -g yarn
+```
+
+ </details>
+
+ <details>
+   <summary>macOS</summary>
+
+### Prerequisites: macOS
+
+Install Homebrew, if you haven't already:
+
+```bash
+/bin/bash -c $(curl -fsSL <https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh>)
+```
+
+Install the rust toolchain and cargo:
+
+```basj
+brew install rustup-init
+rustup-init
+```
+
+Install Node.js v19 and yarn:
+
+```bash
+brew install node yarn
+```
+
+ </details>
+
+ <details>
+   <summary>Windows</summary>
+
+### Prerequisites: Windows
+
+Install the rust toolchain and cargo:
+
+1. Download and run the rustup-init.exe from <https://rustup.rs/>
+2. Follow the instructions to complete the installation.
+
+Install Node.js v19 and yarn:
+
+1. Download the installer from <https://nodejs.org/en/download/>
+2. Run the installer and follow the instructions to complete the installation.
+3. Open a command prompt or PowerShell and run the following command to install yarn:
+
+```sh
+npm install -g yarn
+```
+
+ </details>
 
 Clone this project and install dependencies
 
-  ```sh
-  git clone https://github.com/polyphony-chat/polyphony.git
-  cd client
-  yarn install
-  ```
+```sh
+git clone https://github.com/polyphony-chat/polyphony.git
+cd client
+yarn install
+```
 
 You should now be able to run the client with `yarn tauri dev` from the project root.
 You can independently build and run the Rust backend with `cargo run` from the `src-tauri` directory.
@@ -131,6 +187,7 @@ See the [open issues](https://github.com/polyphony-chat/polyphony/issues) for a 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Read: [Polyphony Design and collaboration guidelines](https://github.com/polyphony-chat/polyphony/wiki/Design-Guidelines-for-collaborating-on-Polyphony)
@@ -153,6 +210,7 @@ If you want to contribute code, please follow these steps:
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the GPLv3 License. See `LICENSE.txt` for more information.
@@ -160,6 +218,7 @@ Distributed under the GPLv3 License. See `LICENSE.txt` for more information.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
+
 ## Contact
 
 florian@pro-weber.com
@@ -180,6 +239,7 @@ Project Link: [https://github.com/polyphony-chat/polyphony](https://github.com/p
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [build-shield]: https://img.shields.io/github/actions/workflow/status/polyphony-chat/polyphony/rust.yml?style=plastic
 [build-url]: https://github.com/polyphony-chat/polyphony/blob/main/.github/workflows/rust.yml
 [contributors-shield]: https://img.shields.io/github/contributors/polyphony-chat/polyphony.svg?style=plastic
@@ -192,9 +252,9 @@ Project Link: [https://github.com/polyphony-chat/polyphony](https://github.com/p
 [issues-url]: https://github.com/polyphony-chat/polyphony/issues
 [license-shield]: https://img.shields.io/github/license/polyphony-chat/polyphony.svg?style=plastic
 [license-url]: https://github.com/polyphony-chat/polyphony/blob/master/LICENSE
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=plastic&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Rust]: https://img.shields.io/badge/Rust-orange?style=plastic&logo=rust
-[Rust-url]: https://www.rust-lang.org/
-[Typescript]: https://img.shields.io/badge/TypeScript-blue?style=plastic&logo=typescript&logoColor=FFFFFF
-[Typescript-url]: https://www.typescriptlang.org/
+[svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=plastic&logo=svelte&logoColor=FF3E00
+[svelte-url]: https://svelte.dev/
+[rust]: https://img.shields.io/badge/Rust-orange?style=plastic&logo=rust
+[rust-url]: https://www.rust-lang.org/
+[typescript]: https://img.shields.io/badge/TypeScript-blue?style=plastic&logo=typescript&logoColor=FFFFFF
+[typescript-url]: https://www.typescriptlang.org/
