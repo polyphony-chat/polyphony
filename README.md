@@ -132,7 +132,7 @@ Install Homebrew, if you haven't already:
 
 Install the rust toolchain and cargo:
 
-```basj
+```bash
 brew install rustup-init
 rustup-init
 ```
