@@ -31,6 +31,8 @@
     <a href="https://github.com/polyphony-chat/polyphony/issues">Report Bug</a>
     ·
     <a href="https://github.com/polyphony-chat/polyphony/issues">Request Feature</a>
+    ·
+    <a href="https://discord.gg/8tKSC8wzDq">Join Discord</a>
   </p>
 </div>
 
