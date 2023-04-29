@@ -1,3 +1,6 @@
+# PSA:
+Development of the Polyphony client depends on the [Chorus library for Spacebar](https://github.com/polyphony-chat/chorus). Client development is not dead - in fact, there are many commits to the Chorus repository every single day. [Join the Discord](https://discord.gg/8tKSC8wzDq) if you want to be up-to-date!
+
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 
 <a name="readme-top"></a>
