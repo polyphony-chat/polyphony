@@ -7,12 +7,12 @@ Development of the Polyphony client depends on the [Chorus library for Spacebar]
 
 <div align="center">
 
+[![Discord]][Discord-invite]
 [![Build][build-shield]][build-url]
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![GPL3 License][license-shield]][license-url]
 
 </div>
 
@@ -245,21 +245,23 @@ Project Link: [https://github.com/polyphony-chat/polyphony](https://github.com/p
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[build-shield]: https://img.shields.io/github/actions/workflow/status/polyphony-chat/polyphony/rust.yml?style=plastic
+[build-shield]: https://img.shields.io/github/actions/workflow/status/polyphony-chat/polyphony/rust.yml?style=flat
 [build-url]: https://github.com/polyphony-chat/polyphony/blob/main/.github/workflows/rust.yml
-[contributors-shield]: https://img.shields.io/github/contributors/polyphony-chat/polyphony.svg?style=plastic
+[contributors-shield]: https://img.shields.io/github/contributors/polyphony-chat/polyphony.svg?style=flat
 [contributors-url]: https://github.com/polyphony-chat/polyphony/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/polyphony-chat/polyphony.svg?style=plastic
+[forks-shield]: https://img.shields.io/github/forks/polyphony-chat/polyphony.svg?style=flat
 [forks-url]: https://github.com/polyphony-chat/polyphony/network/members
-[stars-shield]: https://img.shields.io/github/stars/polyphony-chat/polyphony.svg?style=plastic
+[stars-shield]: https://img.shields.io/github/stars/polyphony-chat/polyphony.svg?style=flat
 [stars-url]: https://github.com/polyphony-chat/polyphony/stargazers
-[issues-shield]: https://img.shields.io/github/issues/polyphony-chat/polyphony.svg?style=plastic
+[issues-shield]: https://img.shields.io/github/issues/polyphony-chat/polyphony.svg?style=flat
 [issues-url]: https://github.com/polyphony-chat/polyphony/issues
-[license-shield]: https://img.shields.io/github/license/polyphony-chat/polyphony.svg?style=plastic
+[license-shield]: https://img.shields.io/github/license/polyphony-chat/polyphony.svg?style=flat
 [license-url]: https://github.com/polyphony-chat/polyphony/blob/master/LICENSE
 [svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=plastic&logo=svelte&logoColor=FF3E00
 [svelte-url]: https://svelte.dev/
-[rust]: https://img.shields.io/badge/Rust-orange?style=plastic&logo=rust
+[rust]: https://img.shields.io/badge/Rust-orange?style=flat&logo=rust
 [rust-url]: https://www.rust-lang.org/
 [typescript]: https://img.shields.io/badge/TypeScript-blue?style=plastic&logo=typescript&logoColor=FFFFFF
 [typescript-url]: https://www.typescriptlang.org/
+[Discord]: https://dcbadge.vercel.app/api/server/m3FpcapGDD?style=flat
+[Discord-invite]: https://discord.com/invite/m3FpcapGDD
