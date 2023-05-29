@@ -20,7 +20,7 @@ Development of the Polyphony client depends on the [Chorus library for Spacebar]
 <br />
 <div align="center">
   <a href="https://github.com/polyphony-chat/polyphony">
-    <img src="images/polyphony.png" alt="Logo" width="128" height="128">
+    <img src="https://github.com/polyphony-chat/design/blob/main/branding/polyphony-2-4.png?raw=true" alt="Logo" width="128" height="128">
   </a>
 
 <h3 align="center">Polyphony</h3>
@@ -67,16 +67,16 @@ Development of the Polyphony client depends on the [Chorus library for Spacebar]
 
 ## About The Project
 
-![Product Mockup](images/mockup.png)
+![Product Mockup](https://github.com/polyphony-chat/design/blob/main/ui/client-mockup-draft.png?raw=true)
 <cite>_A mockup of the Polyphony client._</cite>
 
-Polyphony will be a multi-instance, Discord/Spacebar API-compatible chat client, written in Rust and Svelte (TypeScript) using Tauri. The three goals of this project are ease-of-use, user experience and performance.
+Polyphony will be a multi-instance, Discord/Spacebar API-compatible chat client, written in Rust and Svelte (TypeScript) using Tauri. The three goals of this project are ease of use, user experience and performance.
 
 Ideally, you will be able to connect to multiple Spacebar instances at the same time and use the client just like you would expect a regular Discord client to work.
 
 ### Spacebar? What's that?
 
-[Go read about the Spacebar project here!](https://github.com/spacebarchat) Spacebar describes itself as "_a free open source selfhostable discord compatible chat, voice and video platform_".
+[Go read about the Spacebar project here!](https://github.com/spacebarchat) Spacebar describes itself as "_a free _open source _self hostable_ discord compatible_ chat, voice and video platform_".
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -197,7 +197,7 @@ See the [open issues](https://github.com/polyphony-chat/polyphony/issues) for a 
 
 Read: [Polyphony Design and collaboration guidelines](https://github.com/polyphony-chat/polyphony/wiki/Design-Guidelines-for-collaborating-on-Polyphony)
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
