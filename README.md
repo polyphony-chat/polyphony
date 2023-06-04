@@ -26,7 +26,7 @@ Development of the Polyphony client depends on the [Chorus library for Spacebar]
 <h3 align="center">Polyphony</h3>
 
   <p align="center">
-    A multi-instance, Discord/Spacebar API-compatible chat client, written in Rust and Svelte (TypeScript) using Tauri.
+    A multi-instance, Discord/Spacebar API-compatible chat client, written in Rust and GTK.
     <br />
     <a href="https://github.com/polyphony-chat/polyphony"><strong>Explore the docs »</strong></a>
     <br />
@@ -70,7 +70,7 @@ Development of the Polyphony client depends on the [Chorus library for Spacebar]
 ![Product Mockup](https://github.com/polyphony-chat/design/blob/main/ui/client-mockup-draft.png?raw=true)
 <cite>_A mockup of the Polyphony client._</cite>
 
-Polyphony will be a multi-instance, Discord/Spacebar API-compatible chat client, written in Rust and Svelte (TypeScript) using Tauri. The three goals of this project are ease of use, user experience and performance.
+Polyphony will be a multi-instance, Discord/Spacebar API-compatible chat client, written in Rust and GTK. The three goals of this project are ease of use, user experience and performance.
 
 Ideally, you will be able to connect to multiple Spacebar instances at the same time and use the client just like you would expect a regular Discord client to work.
 
