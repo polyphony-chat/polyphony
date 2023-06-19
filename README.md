@@ -1,8 +1,3 @@
-# PSA:
-Development of the Polyphony client depends on the [Chorus library for Spacebar](https://github.com/polyphony-chat/chorus). Client development is not dead - in fact, there are many commits to the Chorus repository every single day. [Join the Discord](https://discord.gg/8tKSC8wzDq) if you want to be up-to-date!
-
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
-
 <a name="readme-top"></a>
 
 <div align="center">
@@ -13,6 +8,7 @@ Development of the Polyphony client depends on the [Chorus library for Spacebar]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
+<img src="https://img.shields.io/static/v1?label=Status&message=Early%20Development&color=blue">
 
 </div>
 
