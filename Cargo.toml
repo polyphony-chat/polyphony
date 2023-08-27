@@ -8,7 +8,10 @@ license = "GPL-3.0"
 
 [dependencies]
 iced = "0.10"
-chorus = { git = "https://github.com/polyphony-chat/chorus.git" }
+chorus = { git = "https://github.com/polyphony-chat/chorus.git", features = [
+    "client",
+] }
+tokio = { version = "1.32.0", features = ["rt-multi-thread"] }
 
 [dev-dependencies]
 rusty-hook = "0.11.2"
