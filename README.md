@@ -5,9 +5,8 @@
 [![Discord]][Discord-invite]
 [![Build][build-shield]][build-url]
 [![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
+<img src="https://img.shields.io/badge/0.10-blue?logo=iced">
 <img src="https://img.shields.io/static/v1?label=Status&message=Early%20Development&color=blue">
 
 </div>
@@ -22,7 +21,7 @@
 <h3 align="center">Polyphony</h3>
 
   <p align="center">
-    A multi-instance, Discord/Spacebar API-compatible chat client, written in Rust and GTK.
+    A multi-instance, Discord/Spacebar API-compatible chat client, written in Rust, using Iced.
     <br />
     <a href="https://github.com/polyphony-chat/polyphony"><strong>Explore the docs »</strong></a>
     <br />
@@ -42,7 +41,7 @@
 ![Product Mockup](https://github.com/polyphony-chat/design/blob/main/ui/client-mockup-draft.png?raw=true)
 <cite>_A mockup of the Polyphony client._</cite>
 
-Polyphony will be a multi-instance, Discord/Spacebar API-compatible chat client, written in Rust and GTK. The three goals of this project are ease of use, user experience and performance.
+Polyphony will be a multi-instance, Discord/Spacebar API-compatible chat client, written in Rust, using Iced. The three goals of this project are ease of use, user experience and performance.
 
 Ideally, you will be able to connect to multiple Spacebar instances at the same time and use the client just like you would expect a regular Discord client to work.
 
