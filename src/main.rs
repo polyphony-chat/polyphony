@@ -1,18 +1,32 @@
+use std::collections::HashMap;
+
 use chorus::instance::{ChorusUser, Instance};
 use chorus::types::RegisterSchema;
 use chorus::UrlBundle;
-use iced::futures::executor::block_on;
 use iced::widget::{button, column, container, text};
-use iced::{Alignment, Application, Command, Element, Length, Settings};
+use iced::{Application, Command, Element, Length, Settings};
 
 #[tokio::main]
 async fn main() -> iced::Result {
     Client::run(Settings::default())
 }
 
-enum Client {
-    Disconnected,
-    Connected(Polyphony),
+#[derive(Debug, Clone)]
+struct InstanceUserBundle {
+    pub instance: Instance,
+    pub user: ChorusUser,
+}
+
+#[derive(Debug, Default)]
+struct Client {
+    pub instances: HashMap<UrlBundle, Instance>,
+    pub users: HashMap<UrlBundle, ChorusUser>,
+}
+
+impl Client {
+    pub fn is_connected(&self) -> bool {
+        !self.instances.is_empty() && !self.users.is_empty()
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -20,7 +34,8 @@ enum Message {
     GuildJoined,
     MessageReceived,
     Connect((UrlBundle, RegisterSchema)),
-    Connected(Polyphony),
+    Connected(InstanceUserBundle),
+    Disconnected,
 }
 
 impl Application for Client {
@@ -33,14 +48,16 @@ impl Application for Client {
     type Flags = ();
 
     fn new(_flags: Self::Flags) -> (Self, iced::Command<Self::Message>) {
-        (Client::Disconnected, Command::none())
+        (Client::default(), Command::none())
     }
 
     fn title(&self) -> String {
-        let subtitle = match self {
-            Client::Disconnected => "Disconnected",
-            Client::Connected(_) => "Connected",
-        };
+        let subtitle;
+        if self.instances.is_empty() {
+            subtitle = "Disconnected"
+        } else {
+            subtitle = "Connected"
+        }
 
         format!("Client - {}", subtitle)
     }
@@ -48,10 +65,13 @@ impl Application for Client {
     fn update(&mut self, message: Self::Message) -> iced::Command<Self::Message> {
         match message {
             Message::Connect((urls, register)) => {
-                Command::perform(Polyphony::new(urls, register), Message::Connected)
+                Command::perform(InstanceUserBundle::new(urls, register), Message::Connected)
             }
             Message::Connected(polyphony) => {
-                *self = Client::Connected(polyphony);
+                self.instances
+                    .insert(polyphony.instance.urls.clone(), polyphony.instance);
+                let urls = polyphony.user.belongs_to.read().unwrap().urls.clone();
+                self.users.insert(urls, polyphony.user);
                 Command::none()
             }
             _ => Command::none(),
@@ -59,14 +79,11 @@ impl Application for Client {
     }
 
     fn view(&self) -> Element<'_, Self::Message, iced::Renderer<Self::Theme>> {
-        let content = match self {
-            Client::Connected(instance) => {
-                column!(text(format!(
-                    "Connected with token {}",
-                    instance.user.token()
-                )))
+        let content = match self.is_connected() {
+            true => {
+                column!(text(format!("Connected to {:?}", self.instances)))
             }
-            Client::Disconnected => {
+            false => {
                 let urls = UrlBundle::new(
                     "http://localhost:3001/api".to_string(),
                     "ws://localhost:3001/".to_string(),
@@ -93,13 +110,7 @@ impl Application for Client {
     }
 }
 
-#[derive(Debug, Clone)]
-struct Polyphony {
-    pub instance: Instance,
-    pub user: ChorusUser,
-}
-
-impl Polyphony {
+impl InstanceUserBundle {
     async fn new(urls: UrlBundle, register: RegisterSchema) -> Self {
         let mut instance = Instance::new(urls, false).await.unwrap();
         let user = instance.register_account(&register).await.unwrap();
