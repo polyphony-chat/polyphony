@@ -50,6 +50,10 @@ impl Application for Client {
             Message::Connect((urls, register)) => {
                 Command::perform(Polyphony::new(urls, register), Message::Connected)
             }
+            Message::Connected(polyphony) => {
+                *self = Client::Connected(polyphony);
+                Command::none()
+            }
             _ => Command::none(),
         }
     }
@@ -70,7 +74,7 @@ impl Application for Client {
                 );
                 let register = RegisterSchema {
                     username: "userrrrrr".to_string(),
-                    password: Some("test".to_string()),
+                    date_of_birth: Some("1999-01-01".to_string()),
                     consent: true,
                     ..Default::default()
                 };
@@ -89,7 +93,7 @@ impl Application for Client {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Polyphony {
     pub instance: Instance,
     pub user: ChorusUser,
