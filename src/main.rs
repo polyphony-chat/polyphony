@@ -33,12 +33,14 @@ impl Default for Client {
 pub enum Screen {
     Login(screen::Login),
     Dashboard(screen::Dashboard),
+    Welcome(screen::Welcome),
 }
 
 #[derive(Debug, Clone)]
 pub enum Message {
     Login(message::Login),
     Dashboard(message::Dashboard),
+    Welcome(message::Welcome),
 }
 
 impl Application for Client {
@@ -72,6 +74,7 @@ impl Application for Client {
         let content = match &self.screen {
             Screen::Login(login) => login.view(),
             Screen::Dashboard(dash) => dash.view(&self.instances, &self.users),
+            Screen::Welcome(welcome) => welcome.view(),
         };
         container(content)
             .width(Length::Fill)
