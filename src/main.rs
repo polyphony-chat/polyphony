@@ -5,9 +5,8 @@ use std::collections::HashMap;
 
 use chorus::instance::{ChorusUser, Instance};
 use chorus::UrlBundle;
-use iced::widget::{button, column, container, text};
+use iced::widget::container;
 use iced::{Application, Command, Element, Length, Settings};
-use screen::Login;
 
 #[tokio::main]
 async fn main() -> iced::Result {
@@ -25,7 +24,7 @@ impl Default for Client {
         Self {
             instances: Default::default(),
             users: Default::default(),
-            screen: Screen::Login(Login),
+            screen: Screen::Welcome(screen::Welcome::default()),
         }
     }
 }
@@ -67,7 +66,15 @@ impl Application for Client {
     }
 
     fn update(&mut self, message: Self::Message) -> iced::Command<Self::Message> {
-        todo!()
+        match message {
+            Message::Welcome(message) => {
+                let Screen::Welcome(welcome) = &mut self.screen else {
+                    return Command::none();
+                };
+                message::Welcome::update(welcome, message)
+            }
+            _ => todo!(),
+        }
     }
 
     fn view(&self) -> Element<'_, Self::Message, iced::Renderer<Self::Theme>> {
