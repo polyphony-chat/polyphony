@@ -5,6 +5,15 @@ use crate::Message;
 #[derive(Debug, Clone, Hash, PartialEq, Eq)]
 pub enum Welcome {
     UrlChanged(String),
+    UsernameChanged(String),
+    PasswordChanged(String),
+    LoginPressed,
+}
+
+impl From<Welcome> for Message {
+    fn from(welcome: Welcome) -> Self {
+        Message::Welcome(welcome)
+    }
 }
 
 impl Welcome {
@@ -14,6 +23,15 @@ impl Welcome {
                 state.url_input = value;
                 Command::none()
             }
+            Self::UsernameChanged(value) => {
+                state.username_input = value;
+                Command::none()
+            }
+            Self::PasswordChanged(value) => {
+                state.password_input = value;
+                Command::none()
+            }
+            _ => todo!(),
         }
     }
 }
