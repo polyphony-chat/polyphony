@@ -1,7 +1,8 @@
 use std::collections::HashMap;
 
-use crate::{message, Message};
+use crate::{message, Message, UserIdentifier};
 use chorus::instance::{ChorusUser, Instance};
+use chorus::types::Snowflake;
 use chorus::UrlBundle;
 use iced::widget::{button, column, text};
 use iced::{Element, Renderer};
@@ -12,7 +13,7 @@ impl Dashboard {
     pub fn view(
         &'_ self,
         instances: HashMap<UrlBundle, Instance>,
-        users: HashMap<(UrlBundle, String, u16), ChorusUser>,
+        users: HashMap<UserIdentifier, ChorusUser>,
     ) -> Element<crate::Message> {
         let users = text::<Renderer>(format!(
             "Logged in as {:?}",

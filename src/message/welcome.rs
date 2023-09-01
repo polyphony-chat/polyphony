@@ -74,8 +74,7 @@ impl Welcome {
                     state.users.insert(
                         (
                             result.belongs_to.read().unwrap().urls.clone(),
-                            result.object.read().unwrap().username.clone(),
-                            result.object.read().unwrap().discriminator.parse().unwrap(),
+                            result.object.read().unwrap().id,
                         ),
                         result.clone(),
                     );
