@@ -8,7 +8,7 @@ license = "GPL-3.0"
 
 [dependencies]
 iced = { version = "0.10", features = ["tokio"] }
-chorus = { version = "0.4.0", features = ["client"] }
+chorus = { path = "../chorus", features = ["client"] }
 tokio = { version = "1.32.0", features = ["rt-multi-thread"] }
 serde = { version = "1.0.188", features = ["derive", "rc"] }
 serde_json = "1.0.105"
