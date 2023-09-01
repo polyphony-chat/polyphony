@@ -1,13 +1,19 @@
+use chorus::errors::ChorusError;
+use chorus::instance::{ChorusUser, Instance};
+use chorus::types::LoginSchema;
+use chorus::UrlBundle;
 use iced::Command;
 
-use crate::Message;
+use crate::{Client, Message, Screen};
 
-#[derive(Debug, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Clone)]
 pub enum Welcome {
     UrlChanged(String),
     UsernameChanged(String),
     PasswordChanged(String),
     LoginPressed,
+    InstanceCreateResultGotten(Result<Instance, ChorusError>),
+    LoginRequestDone(Result<ChorusUser, ChorusError>),
 }
 
 impl From<Welcome> for Message {
@@ -17,21 +23,68 @@ impl From<Welcome> for Message {
 }
 
 impl Welcome {
-    pub fn update(state: &mut crate::screen::Welcome, message: Self) -> iced::Command<Message> {
+    pub fn update(state: &mut Client, message: Self) -> iced::Command<Message> {
+        let Screen::Welcome(welcome) = &mut state.screen else {
+            return Command::none();
+        };
         match message {
             Self::UrlChanged(value) => {
-                state.url_input = value;
+                welcome.url_input = value;
                 Command::none()
             }
             Self::UsernameChanged(value) => {
-                state.username_input = value;
+                welcome.username_input = value;
                 Command::none()
             }
             Self::PasswordChanged(value) => {
-                state.password_input = value;
+                welcome.password_input = value;
                 Command::none()
             }
-            _ => todo!(),
+            Self::LoginPressed => {
+                let url_bundle = UrlBundle::new(
+                    format!("http://{}/api", welcome.url_input),
+                    format!("ws://{}", welcome.url_input),
+                    format!("http://{}", welcome.url_input),
+                );
+                Command::perform(Instance::new(url_bundle, true), |result| {
+                    Welcome::InstanceCreateResultGotten(result).into()
+                })
+            }
+            Self::InstanceCreateResultGotten(result) => {
+                if let Ok(result) = result {
+                    let result_clone = result.clone();
+                    state
+                        .instances
+                        .lock()
+                        .unwrap()
+                        .insert(result.urls.clone(), result.clone());
+                    let login_schema: LoginSchema = LoginSchema {
+                        login: welcome.username_input.clone(),
+                        password: welcome.password_input.clone(),
+                        ..Default::default()
+                    };
+                    let future = result_clone.login_account(login_schema);
+                    Command::perform(future, |loginresult| {
+                        Message::from(Welcome::LoginRequestDone(loginresult))
+                    });
+                } else {
+                    welcome.error = format!("Error: {:?}", result.err().unwrap());
+                }
+                Command::none()
+            }
+            Self::LoginRequestDone(result) => {
+                if let Ok(result) = result {
+                    state.users.lock().unwrap().insert(
+                        (
+                            result.belongs_to.read().unwrap().urls.clone(),
+                            result.object.read().unwrap().username.clone(),
+                            result.object.read().unwrap().discriminator.parse().unwrap(),
+                        ),
+                        result.clone(),
+                    );
+                }
+                todo!()
+            }
         }
     }
 }

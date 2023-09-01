@@ -2,6 +2,8 @@ mod message;
 mod screen;
 
 use std::collections::HashMap;
+use std::fmt::Display;
+use std::sync::{Arc, Mutex};
 
 use chorus::instance::{ChorusUser, Instance};
 use chorus::UrlBundle;
@@ -13,9 +15,9 @@ async fn main() -> iced::Result {
     Client::run(Settings::default())
 }
 
-struct Client {
-    pub instances: HashMap<UrlBundle, Instance>,
-    pub users: HashMap<UrlBundle, ChorusUser>,
+pub struct Client {
+    pub instances: Arc<Mutex<HashMap<UrlBundle, Instance>>>,
+    pub users: Arc<Mutex<HashMap<(UrlBundle, String, u16), ChorusUser>>>, // Urls, Username, Discrim
     pub screen: Screen,
 }
 
@@ -33,6 +35,16 @@ pub enum Screen {
     Login(screen::Login),
     Dashboard(screen::Dashboard),
     Welcome(screen::Welcome),
+}
+
+impl Display for Screen {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Login(_) => write!(f, "Login"),
+            Self::Dashboard(_) => write!(f, "Dashboard"),
+            Self::Welcome(_) => write!(f, "Welcome"),
+        }
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -56,22 +68,16 @@ impl Application for Client {
     }
 
     fn title(&self) -> String {
-        let subtitle = if self.instances.is_empty() {
-            "Disconnected"
-        } else {
-            "Connected"
-        };
-
-        format!("Client - {}", subtitle)
+        format!("Client - {}", self.screen)
     }
 
     fn update(&mut self, message: Self::Message) -> iced::Command<Self::Message> {
         match message {
             Message::Welcome(message) => {
-                let Screen::Welcome(welcome) = &mut self.screen else {
+                let Screen::Welcome(_) = &mut self.screen else {
                     return Command::none();
                 };
-                message::Welcome::update(welcome, message)
+                message::Welcome::update(self, message)
             }
             _ => todo!(),
         }
@@ -80,7 +86,7 @@ impl Application for Client {
     fn view(&self) -> Element<'_, Self::Message, iced::Renderer<Self::Theme>> {
         let content = match &self.screen {
             Screen::Login(login) => login.view(),
-            Screen::Dashboard(dash) => dash.view(&self.instances, &self.users),
+            Screen::Dashboard(dash) => dash.view(self.instances.clone(), self.users.clone()),
             Screen::Welcome(welcome) => welcome.view(),
         };
         container(content)

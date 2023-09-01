@@ -1,5 +1,5 @@
 use crate::{message, Message};
-use iced::widget::{column, text_input};
+use iced::widget::{button, column, text, text_input};
 use iced::{Element, Renderer};
 
 #[derive(Debug, Default)]
@@ -7,6 +7,7 @@ pub struct Welcome {
     pub url_input: String,
     pub username_input: String,
     pub password_input: String,
+    pub error: String,
 }
 
 impl Welcome {
@@ -27,6 +28,9 @@ impl Welcome {
         let password_input = text_input::<Message, Renderer>("Password", &redacted_password)
             .padding(15)
             .on_input(|input: String| message::Welcome::PasswordChanged(input).into());
-        column!(url_input, username_input, password_input).into()
+        let login =
+            button::<Message, Renderer>("Login").on_press(message::Welcome::LoginPressed.into());
+        let error = text(self.error.clone());
+        column!(url_input, username_input, password_input, login, error).into()
     }
 }
