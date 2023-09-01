@@ -1,12 +1,9 @@
-use iced::widget::{column, text};
-use iced::{Command, Element};
-
-use crate::Client;
+use iced::Element;
 
 pub struct Login;
 
 impl Login {
-    pub fn view<'a>(&'a self) -> Element<'a, crate::Message> {
+    pub fn view(&'_ self) -> Element<crate::Message> {
         todo!()
     }
 }

@@ -78,8 +78,11 @@ impl Welcome {
                         ),
                         result.clone(),
                     );
+                    welcome.login_result = format!("Logged in: {:?}", result);
+                } else {
+                    welcome.error = format!("Error: {:?}", result.err().unwrap())
                 }
-                todo!()
+                Command::none()
             }
         }
     }

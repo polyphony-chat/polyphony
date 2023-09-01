@@ -8,6 +8,7 @@ pub struct Welcome {
     pub username_input: String,
     pub password_input: String,
     pub error: String,
+    pub login_result: String,
 }
 
 impl Welcome {
@@ -18,19 +19,21 @@ impl Welcome {
         let username_input = text_input::<Message, Renderer>("Username", &self.username_input)
             .padding(15)
             .on_input(|input: String| message::Welcome::UsernameChanged(input).into());
-        let redacted_password = {
-            let mut stars = String::new();
-            for _ in 0..self.password_input.len() {
-                stars += "*"
-            }
-            stars
-        };
-        let password_input = text_input::<Message, Renderer>("Password", &redacted_password)
+        let password_input = text_input::<Message, Renderer>("Password", &self.password_input)
             .padding(15)
             .on_input(|input: String| message::Welcome::PasswordChanged(input).into());
         let login =
             button::<Message, Renderer>("Login").on_press(message::Welcome::LoginPressed.into());
         let error = text(self.error.clone());
-        column!(url_input, username_input, password_input, login, error).into()
+        let login_result = text(self.login_result.clone());
+        column!(
+            url_input,
+            username_input,
+            password_input,
+            login,
+            error,
+            login_result
+        )
+        .into()
     }
 }
