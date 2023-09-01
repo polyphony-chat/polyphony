@@ -5,6 +5,7 @@ use std::collections::HashMap;
 use std::fmt::Display;
 
 use chorus::instance::{ChorusUser, Instance};
+use chorus::types::Snowflake;
 use chorus::UrlBundle;
 use iced::widget::container;
 use iced::{Application, Command, Element, Length, Settings};
@@ -14,9 +15,12 @@ async fn main() -> iced::Result {
     Client::run(Settings::default())
 }
 
+/// (URLs, User-ID)
+pub type UserIdentifier = (UrlBundle, Snowflake);
+
 pub struct Client {
     pub instances: HashMap<UrlBundle, Instance>,
-    pub users: HashMap<(UrlBundle, String, u16), ChorusUser>, // Urls, Username, Discrim
+    pub users: HashMap<UserIdentifier, ChorusUser>,
     pub screen: Screen,
 }
 
