@@ -1,6 +1,11 @@
+use std::collections::HashMap;
+use std::sync::{Arc, RwLock};
+
+use chorus::instance::ChorusUser;
+use chorus::types::Guild;
 use iced::Command;
 
-use crate::{screen, Client, Message, Screen};
+use crate::{screen, Client, Message, Screen, UserIdentifier};
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum Dashboard {
@@ -22,5 +27,19 @@ impl Dashboard {
             Self::ToLogin => state.screen = Screen::Welcome(screen::Welcome::default()),
         }
         Command::none() // TODO
+    }
+
+    async fn fetch_guilds(
+        users: Arc<RwLock<HashMap<UserIdentifier, ChorusUser>>>,
+    ) -> Vec<(UserIdentifier, Guild)> {
+        let mut users_lock = users.write().unwrap().clone();
+        let mut return_vec: Vec<(UserIdentifier, chorus::types::Guild)> = Vec::new();
+        for (user_identifier, user) in users_lock.iter_mut() {
+            let user_guilds = user.get_guilds(None).await.unwrap();
+            for item in user_guilds {
+                return_vec.push((user_identifier.clone(), item));
+            }
+        }
+        return_vec
     }
 }
