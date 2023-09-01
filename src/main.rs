@@ -78,7 +78,13 @@ impl Application for Client {
                 };
                 message::Welcome::update(self, message)
             }
-            _ => todo!(),
+            Message::Dashboard(message) => {
+                let Screen::Dashboard(_) = &mut self.screen else {
+                    return Command::none();
+                };
+                message::Dashboard::update(self, message)
+            }
+            _ => todo!("Implement this updatemessage in main.rs!"),
         }
     }
 

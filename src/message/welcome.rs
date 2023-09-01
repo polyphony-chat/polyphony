@@ -1,3 +1,4 @@
+use crate::screen;
 use chorus::errors::ChorusError;
 use chorus::instance::{ChorusUser, Instance};
 use chorus::types::LoginSchema;
@@ -78,7 +79,7 @@ impl Welcome {
                         ),
                         result.clone(),
                     );
-                    welcome.login_result = format!("Logged in: {:?}", result);
+                    state.screen = Screen::Dashboard(screen::Dashboard);
                 } else {
                     welcome.error = format!("Error: {:?}", result.err().unwrap())
                 }
