@@ -10,8 +10,8 @@ pub struct Dashboard;
 impl Dashboard {
     pub fn view<'a>(
         &'a self,
-        instances: Arc<Mutex<HashMap<UrlBundle, Instance>>>,
-        users: Arc<Mutex<HashMap<(UrlBundle, String, u16), ChorusUser>>>,
+        instances: HashMap<UrlBundle, Instance>,
+        users: HashMap<(UrlBundle, String, u16), ChorusUser>,
     ) -> Element<'a, crate::Message> {
         todo!()
     }

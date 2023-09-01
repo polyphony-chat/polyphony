@@ -3,7 +3,6 @@ mod screen;
 
 use std::collections::HashMap;
 use std::fmt::Display;
-use std::sync::{Arc, Mutex};
 
 use chorus::instance::{ChorusUser, Instance};
 use chorus::UrlBundle;
@@ -16,8 +15,8 @@ async fn main() -> iced::Result {
 }
 
 pub struct Client {
-    pub instances: Arc<Mutex<HashMap<UrlBundle, Instance>>>,
-    pub users: Arc<Mutex<HashMap<(UrlBundle, String, u16), ChorusUser>>>, // Urls, Username, Discrim
+    pub instances: HashMap<UrlBundle, Instance>,
+    pub users: HashMap<(UrlBundle, String, u16), ChorusUser>, // Urls, Username, Discrim
     pub screen: Screen,
 }
 

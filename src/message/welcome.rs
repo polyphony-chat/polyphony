@@ -53,18 +53,14 @@ impl Welcome {
             Self::InstanceCreateResultGotten(result) => {
                 if let Ok(result) = result {
                     let result_clone = result.clone();
-                    state
-                        .instances
-                        .lock()
-                        .unwrap()
-                        .insert(result.urls.clone(), result.clone());
+                    state.instances.insert(result.urls.clone(), result.clone());
                     let login_schema: LoginSchema = LoginSchema {
                         login: welcome.username_input.clone(),
                         password: welcome.password_input.clone(),
                         ..Default::default()
                     };
                     let future = result_clone.login_account(login_schema);
-                    Command::perform(future, |loginresult| {
+                    return Command::perform(future, |loginresult| {
                         Message::from(Welcome::LoginRequestDone(loginresult))
                     });
                 } else {
@@ -74,7 +70,7 @@ impl Welcome {
             }
             Self::LoginRequestDone(result) => {
                 if let Ok(result) = result {
-                    state.users.lock().unwrap().insert(
+                    state.users.insert(
                         (
                             result.belongs_to.read().unwrap().urls.clone(),
                             result.object.read().unwrap().username.clone(),
