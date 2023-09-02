@@ -1,23 +1,26 @@
 use std::collections::HashMap;
+use std::sync::{Arc, RwLock};
 
-use crate::{message, Message, UserIdentifier};
+use crate::{message, Client, GlobalIdentifier, Message};
 use chorus::instance::{ChorusUser, Instance};
-use chorus::types::Snowflake;
 use chorus::UrlBundle;
 use iced::widget::{button, column, text};
 use iced::{Element, Renderer};
 
-pub struct Dashboard;
+#[derive(Debug, Default)]
+pub struct Dashboard {
+    current_user: Option<ChorusUser>,
+    users: Arc<RwLock<HashMap<GlobalIdentifier, ChorusUser>>>,
+    instances: Arc<RwLock<HashMap<UrlBundle, Instance>>>,
+}
 
 impl Dashboard {
-    pub fn view(
-        &'_ self,
-        instances: HashMap<UrlBundle, Instance>,
-        users: HashMap<UserIdentifier, ChorusUser>,
-    ) -> Element<crate::Message> {
+    pub fn view(&'_ self, client: &Client) -> Element<crate::Message> {
         let users = text::<Renderer>(format!(
             "Logged in as {:?}",
-            users
+            self.users
+                .read()
+                .unwrap()
                 .values()
                 .map(|x| x.object.read().unwrap().username.clone())
                 .collect::<Vec<String>>()

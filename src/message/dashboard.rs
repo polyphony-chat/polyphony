@@ -5,7 +5,7 @@ use chorus::instance::ChorusUser;
 use chorus::types::Guild;
 use iced::Command;
 
-use crate::{screen, Client, Message, Screen, UserIdentifier};
+use crate::{screen, Client, GlobalIdentifier, Message, Screen};
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum Dashboard {
@@ -30,10 +30,10 @@ impl Dashboard {
     }
 
     async fn fetch_guilds(
-        users: Arc<RwLock<HashMap<UserIdentifier, ChorusUser>>>,
-    ) -> Vec<(UserIdentifier, Guild)> {
+        users: Arc<RwLock<HashMap<GlobalIdentifier, ChorusUser>>>,
+    ) -> Vec<(GlobalIdentifier, Guild)> {
         let mut users_lock = users.write().unwrap().clone();
-        let mut return_vec: Vec<(UserIdentifier, chorus::types::Guild)> = Vec::new();
+        let mut return_vec: Vec<(GlobalIdentifier, chorus::types::Guild)> = Vec::new();
         for (user_identifier, user) in users_lock.iter_mut() {
             let user_guilds = user.get_guilds(None).await.unwrap();
             for item in user_guilds {

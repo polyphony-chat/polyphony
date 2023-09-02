@@ -1,4 +1,3 @@
-use crate::screen;
 use chorus::errors::ChorusError;
 use chorus::instance::{ChorusUser, Instance};
 use chorus::types::LoginSchema;
@@ -54,7 +53,11 @@ impl Welcome {
             Self::InstanceCreateResultGotten(result) => {
                 if let Ok(result) = result {
                     let result_clone = result.clone();
-                    state.instances.insert(result.urls.clone(), result.clone());
+                    state
+                        .instances
+                        .write()
+                        .unwrap()
+                        .insert(result.urls.clone(), result.clone());
                     let login_schema: LoginSchema = LoginSchema {
                         login: welcome.username_input.clone(),
                         password: welcome.password_input.clone(),
@@ -71,14 +74,14 @@ impl Welcome {
             }
             Self::LoginRequestDone(result) => {
                 if let Ok(result) = result {
-                    state.users.insert(
+                    state.users.write().unwrap().insert(
                         (
                             result.belongs_to.read().unwrap().urls.clone(),
                             result.object.read().unwrap().id,
                         ),
                         result.clone(),
                     );
-                    state.screen = Screen::Dashboard(screen::Dashboard);
+                    //state.screen = Screen::Dashboard(screen::Dashboard);
                 } else {
                     welcome.error = format!("Error: {:?}", result.err().unwrap())
                 }
