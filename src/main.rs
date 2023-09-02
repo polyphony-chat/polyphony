@@ -3,6 +3,7 @@ mod screen;
 
 use std::collections::HashMap;
 use std::fmt::Display;
+use std::sync::{Arc, RwLock};
 
 use chorus::instance::{ChorusUser, Instance};
 use chorus::types::Snowflake;
@@ -16,12 +17,19 @@ async fn main() -> iced::Result {
 }
 
 /// (URLs, User-ID)
-pub type UserIdentifier = (UrlBundle, Snowflake);
+pub type GlobalIdentifier = (UrlBundle, Snowflake);
 
 pub struct Client {
-    pub instances: HashMap<UrlBundle, Instance>,
-    pub users: HashMap<UserIdentifier, ChorusUser>,
+    pub instances: Arc<RwLock<HashMap<UrlBundle, Instance>>>,
+    pub users: Arc<RwLock<HashMap<GlobalIdentifier, ChorusUser>>>,
     pub screen: Screen,
+    pub cache: Cache,
+}
+
+#[derive(Debug, Default)]
+pub struct Cache {
+    pub dashboard: Option<screen::Dashboard>,
+    pub messages: HashMap<GlobalIdentifier, Vec<Message>>,
 }
 
 impl Default for Client {
@@ -30,6 +38,7 @@ impl Default for Client {
             instances: Default::default(),
             users: Default::default(),
             screen: Screen::Welcome(screen::Welcome::default()),
+            cache: Cache::default(),
         }
     }
 }
@@ -95,7 +104,7 @@ impl Application for Client {
     fn view(&self) -> Element<'_, Self::Message, iced::Renderer<Self::Theme>> {
         let content = match &self.screen {
             Screen::Login(login) => login.view(),
-            Screen::Dashboard(dash) => dash.view(self.instances.clone(), self.users.clone()),
+            Screen::Dashboard(dash) => dash.view(self),
             Screen::Welcome(welcome) => welcome.view(),
         };
         container(content)
