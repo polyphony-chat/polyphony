@@ -7,7 +7,7 @@ use chorus::UrlBundle;
 use iced::widget::{button, column, text};
 use iced::{Element, Renderer};
 
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Clone)]
 pub struct Dashboard {
     current_user: Option<ChorusUser>,
     users: Arc<RwLock<HashMap<GlobalIdentifier, ChorusUser>>>,
@@ -28,5 +28,13 @@ impl Dashboard {
         let another_login = button::<Message, Renderer>("Login as another user")
             .on_press(message::Dashboard::ToLogin.into());
         column!(text("Welcome to the Dashboard."), users, another_login).into()
+    }
+
+    pub fn get_cache(client: &Client) -> Self {
+        if let Some(cached) = client.cache.dashboard.clone() {
+            cached
+        } else {
+            Dashboard::default()
+        }
     }
 }

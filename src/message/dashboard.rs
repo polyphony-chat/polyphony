@@ -24,7 +24,10 @@ impl Dashboard {
             return Command::none();
         };
         match message {
-            Self::ToLogin => state.screen = Screen::Welcome(screen::Welcome::default()),
+            Self::ToLogin => {
+                state.cache.dashboard = Some(dash.clone());
+                state.screen = Screen::Welcome(screen::Welcome::default())
+            }
         }
         Command::none() // TODO
     }

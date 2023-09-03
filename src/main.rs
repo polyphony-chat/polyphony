@@ -38,7 +38,7 @@ impl Default for Client {
             instances: Default::default(),
             users: Default::default(),
             screen: Screen::Welcome(screen::Welcome::default()),
-            cache: Cache::default(),
+            cache: Default::default(),
         }
     }
 }

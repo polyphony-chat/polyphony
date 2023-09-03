@@ -1,3 +1,4 @@
+use crate::screen;
 use chorus::errors::ChorusError;
 use chorus::instance::{ChorusUser, Instance};
 use chorus::types::LoginSchema;
@@ -23,8 +24,8 @@ impl From<Welcome> for Message {
 }
 
 impl Welcome {
-    pub fn update(state: &mut Client, message: Self) -> iced::Command<Message> {
-        let Screen::Welcome(welcome) = &mut state.screen else {
+    pub fn update(client: &mut Client, message: Self) -> iced::Command<Message> {
+        let Screen::Welcome(welcome) = &mut client.screen else {
             return Command::none();
         };
         match message {
@@ -53,7 +54,7 @@ impl Welcome {
             Self::InstanceCreateResultGotten(result) => {
                 if let Ok(result) = result {
                     let result_clone = result.clone();
-                    state
+                    client
                         .instances
                         .write()
                         .unwrap()
@@ -74,14 +75,14 @@ impl Welcome {
             }
             Self::LoginRequestDone(result) => {
                 if let Ok(result) = result {
-                    state.users.write().unwrap().insert(
+                    client.users.write().unwrap().insert(
                         (
                             result.belongs_to.read().unwrap().urls.clone(),
                             result.object.read().unwrap().id,
                         ),
                         result.clone(),
                     );
-                    //state.screen = Screen::Dashboard(screen::Dashboard);
+                    client.screen = Screen::Dashboard(screen::Dashboard::get_cache(client));
                 } else {
                     welcome.error = format!("Error: {:?}", result.err().unwrap())
                 }
