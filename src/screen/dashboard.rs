@@ -60,7 +60,7 @@ struct GuildAddObserver {
 }
 #[derive(Debug)]
 pub struct GuildUpdateObserver {
-    pub client: Weak<RwLock<Client>>,
+    pub data: Arc<RwLock<Data>>,
 }
 #[derive(Debug)]
 struct GuildRemoveObserver {
@@ -70,11 +70,21 @@ struct GuildRemoveObserver {
 #[async_trait]
 impl Observer<GuildUpdate> for GuildUpdateObserver {
     async fn update(&self, data: &GuildUpdate) {
-        #[allow(clippy::unnecessary_operation)]
-        crate::Message::Dashboard(message::Dashboard::ReceivedGuildUpdate(
-            ((bundle_by_url, data.guild.id), data.guild.clone()),
+        let _ = message::Dashboard::ReceivedGuildUpdate(
+            (
+                (
+                    self.data
+                        .read()
+                        .unwrap()
+                        .url_to_bundle
+                        .get(&data.source_url)
+                        .unwrap()
+                        .clone(),
+                    data.guild.id,
+                ),
+                data.guild.clone(),
+            ),
             message::dashboard::GuildUpdateType::Update,
-        ));
-        todo!()
+        );
     }
 }
