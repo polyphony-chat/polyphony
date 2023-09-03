@@ -54,15 +54,23 @@ impl Welcome {
             }
             Self::InstanceCreateResultGotten(result) => {
                 if let Ok(result) = result {
+                    let login = welcome.username_input.clone();
+                    let password = welcome.password_input.clone();
                     let result_clone = result.clone();
                     client
-                        .instances
+                        .data
                         .write()
                         .unwrap()
+                        .instances
                         .insert(result.urls.clone(), result.clone());
+                    client
+                        .data
+                        .write()
+                        .unwrap()
+                        .url_bundle_to_urls(&result.urls); // TODO: When removing an instance from the clients' instance table, also clean this up
                     let login_schema: LoginSchema = LoginSchema {
-                        login: welcome.username_input.clone(),
-                        password: welcome.password_input.clone(),
+                        login,
+                        password,
                         ..Default::default()
                     };
                     let future = result_clone.login_account(login_schema);
@@ -76,7 +84,7 @@ impl Welcome {
             }
             Self::LoginRequestDone(result) => {
                 if let Ok(result) = result {
-                    client.users.write().unwrap().insert(
+                    client.data.write().unwrap().users.insert(
                         (
                             result.belongs_to.read().unwrap().urls.clone(),
                             result.object.read().unwrap().id,
@@ -85,8 +93,8 @@ impl Welcome {
                     );
                     client.screen = Screen::Dashboard(screen::Dashboard::get_cache(client));
                     return Command::perform(
-                        super::Dashboard::fetch_guilds(client.users.clone()),
-                        |result| message::Dashboard::Guilds(result).into(),
+                        super::Dashboard::fetch_guilds(client.data.clone()),
+                        |result| message::Dashboard::ReceivedGuilds(result).into(),
                     );
                 } else {
                     welcome.error = format!("Error: {:?}", result.err().unwrap())

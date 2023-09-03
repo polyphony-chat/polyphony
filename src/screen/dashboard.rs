@@ -1,9 +1,11 @@
 use std::collections::HashMap;
-use std::sync::{Arc, RwLock};
+use std::sync::{Arc, RwLock, Weak};
 
-use crate::{message, Client, GlobalIdentifier, Message};
+use crate::{message, Client, Data, GlobalIdentifier, Message};
+use async_trait::async_trait;
+use chorus::gateway::Observer;
 use chorus::instance::{ChorusUser, Instance};
-use chorus::types::Guild;
+use chorus::types::{Guild, GuildUpdate};
 use chorus::UrlBundle;
 use iced::widget::{button, column, row, text};
 use iced::{Element, Renderer};
@@ -11,8 +13,7 @@ use iced::{Element, Renderer};
 #[derive(Debug, Default, Clone)]
 pub struct Dashboard {
     pub current_user: Option<ChorusUser>,
-    pub users: Arc<RwLock<HashMap<GlobalIdentifier, ChorusUser>>>,
-    pub instances: Arc<RwLock<HashMap<UrlBundle, Instance>>>,
+    pub data: Arc<RwLock<Data>>,
     pub guilds: Vec<(GlobalIdentifier, Guild)>,
 }
 
@@ -20,9 +21,10 @@ impl Dashboard {
     pub fn view(&'_ self, client: &Client) -> Element<crate::Message> {
         let users = text::<Renderer>(format!(
             "Logged in as {:?}",
-            self.users
+            self.data
                 .read()
                 .unwrap()
+                .users
                 .values()
                 .map(|x| x.object.read().unwrap().username.clone())
                 .collect::<Vec<String>>()
@@ -45,10 +47,34 @@ impl Dashboard {
             cached
         } else {
             Dashboard {
-                instances: client.instances.clone(),
-                users: client.users.clone(),
+                data: client.data.clone(),
                 ..Default::default()
             }
         }
+    }
+}
+
+#[derive(Debug)]
+struct GuildAddObserver {
+    client: Arc<RwLock<Client>>,
+}
+#[derive(Debug)]
+pub struct GuildUpdateObserver {
+    pub client: Weak<RwLock<Client>>,
+}
+#[derive(Debug)]
+struct GuildRemoveObserver {
+    client: Weak<RwLock<Client>>,
+}
+
+#[async_trait]
+impl Observer<GuildUpdate> for GuildUpdateObserver {
+    async fn update(&self, data: &GuildUpdate) {
+        #[allow(clippy::unnecessary_operation)]
+        crate::Message::Dashboard(message::Dashboard::ReceivedGuildUpdate(
+            ((bundle_by_url, data.guild.id), data.guild.clone()),
+            message::dashboard::GuildUpdateType::Update,
+        ));
+        todo!()
     }
 }

@@ -19,11 +19,29 @@ async fn main() -> iced::Result {
 /// (URLs, User-ID)
 pub type GlobalIdentifier = (UrlBundle, Snowflake);
 
+#[derive(Debug)]
 pub struct Client {
-    pub instances: Arc<RwLock<HashMap<UrlBundle, Instance>>>,
-    pub users: Arc<RwLock<HashMap<GlobalIdentifier, ChorusUser>>>,
+    pub data: Arc<RwLock<Data>>,
     pub screen: Screen,
     pub cache: Cache,
+}
+
+#[derive(Debug, Default)]
+pub struct Data {
+    pub instances: HashMap<UrlBundle, Instance>,
+    pub url_to_bundle: HashMap<String, UrlBundle>,
+    pub users: HashMap<GlobalIdentifier, ChorusUser>,
+}
+
+impl Data {
+    pub fn url_bundle_to_urls(&mut self, bundle: &UrlBundle) {
+        self.url_to_bundle
+            .insert(bundle.api.clone(), bundle.clone());
+        self.url_to_bundle
+            .insert(bundle.wss.clone(), bundle.clone());
+        self.url_to_bundle
+            .insert(bundle.cdn.clone(), bundle.clone());
+    }
 }
 
 #[derive(Debug, Default)]
@@ -35,14 +53,14 @@ pub struct Cache {
 impl Default for Client {
     fn default() -> Self {
         Self {
-            instances: Default::default(),
-            users: Default::default(),
             screen: Screen::Welcome(screen::Welcome::default()),
+            data: Arc::new(RwLock::new(Data::default())),
             cache: Default::default(),
         }
     }
 }
 
+#[derive(Debug)]
 pub enum Screen {
     Login(screen::Login),
     Dashboard(screen::Dashboard),

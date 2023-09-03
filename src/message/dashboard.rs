@@ -5,12 +5,20 @@ use chorus::instance::ChorusUser;
 use chorus::types::Guild;
 use iced::Command;
 
-use crate::{screen, Client, GlobalIdentifier, Message, Screen};
+use crate::{screen, Client, Data, GlobalIdentifier, Message, Screen};
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq)]
 pub enum Dashboard {
     ToLogin,
-    Guilds(Vec<(GlobalIdentifier, Guild)>),
+    ReceivedGuilds(Vec<(GlobalIdentifier, Guild)>),
+    ReceivedGuildUpdate((GlobalIdentifier, Guild), GuildUpdateType),
+}
+
+#[derive(Debug, Clone, Hash, PartialEq, Eq, Copy)]
+pub enum GuildUpdateType {
+    Add,
+    Update,
+    Remove,
 }
 
 impl From<Dashboard> for Message {
@@ -29,15 +37,14 @@ impl Dashboard {
                 client.cache.dashboard = Some(dash.clone());
                 client.screen = Screen::Welcome(screen::Welcome::default())
             }
-            Self::Guilds(result) => dash.guilds = result,
+            Self::ReceivedGuilds(result) => dash.guilds = result,
+            Self::ReceivedGuildUpdate(guild, update_type) => todo!(),
         }
         Command::none() // TODO
     }
 
-    pub async fn fetch_guilds(
-        users: Arc<RwLock<HashMap<GlobalIdentifier, ChorusUser>>>,
-    ) -> Vec<(GlobalIdentifier, Guild)> {
-        let mut users_lock = users.write().unwrap().clone();
+    pub async fn fetch_guilds(data: Arc<RwLock<Data>>) -> Vec<(GlobalIdentifier, Guild)> {
+        let mut users_lock = data.write().unwrap().users.clone();
         let mut return_vec: Vec<(GlobalIdentifier, chorus::types::Guild)> = Vec::new();
         for (user_identifier, user) in users_lock.iter_mut() {
             let user_guilds = user

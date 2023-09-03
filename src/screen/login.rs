@@ -1,5 +1,6 @@
 use iced::Element;
 
+#[derive(Debug)]
 pub struct Login;
 
 impl Login {
