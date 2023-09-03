@@ -10,9 +10,9 @@ use iced::{Element, Renderer};
 
 #[derive(Debug, Default, Clone)]
 pub struct Dashboard {
-    current_user: Option<ChorusUser>,
-    users: Arc<RwLock<HashMap<GlobalIdentifier, ChorusUser>>>,
-    instances: Arc<RwLock<HashMap<UrlBundle, Instance>>>,
+    pub current_user: Option<ChorusUser>,
+    pub users: Arc<RwLock<HashMap<GlobalIdentifier, ChorusUser>>>,
+    pub instances: Arc<RwLock<HashMap<UrlBundle, Instance>>>,
     pub guilds: Vec<(GlobalIdentifier, Guild)>,
 }
 
