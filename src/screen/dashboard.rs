@@ -3,8 +3,9 @@ use std::sync::{Arc, RwLock};
 
 use crate::{message, Client, GlobalIdentifier, Message};
 use chorus::instance::{ChorusUser, Instance};
+use chorus::types::Guild;
 use chorus::UrlBundle;
-use iced::widget::{button, column, text};
+use iced::widget::{button, column, row, text};
 use iced::{Element, Renderer};
 
 #[derive(Debug, Default, Clone)]
@@ -12,6 +13,7 @@ pub struct Dashboard {
     current_user: Option<ChorusUser>,
     users: Arc<RwLock<HashMap<GlobalIdentifier, ChorusUser>>>,
     instances: Arc<RwLock<HashMap<UrlBundle, Instance>>>,
+    pub guilds: Vec<(GlobalIdentifier, Guild)>,
 }
 
 impl Dashboard {
@@ -27,7 +29,15 @@ impl Dashboard {
         ));
         let another_login = button::<Message, Renderer>("Login as another user")
             .on_press(message::Dashboard::ToLogin.into());
-        column!(text("Welcome to the Dashboard."), users, another_login).into()
+        let mut guilds: iced::widget::Column<'_, Message, Renderer> = column!();
+        for (_, guild) in self.guilds.iter() {
+            guilds = guilds.push(text(guild.name.as_ref().unwrap().clone()));
+        }
+        row!(
+            column!(text("Welcome to the Dashboard."), users, another_login),
+            guilds
+        )
+        .into()
     }
 
     pub fn get_cache(client: &Client) -> Self {

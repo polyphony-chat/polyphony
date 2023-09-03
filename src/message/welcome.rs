@@ -1,4 +1,4 @@
-use crate::screen;
+use crate::{message, screen};
 use chorus::errors::ChorusError;
 use chorus::instance::{ChorusUser, Instance};
 use chorus::types::LoginSchema;
@@ -84,6 +84,10 @@ impl Welcome {
                         result.clone(),
                     );
                     client.screen = Screen::Dashboard(screen::Dashboard::get_cache(client));
+                    return Command::perform(
+                        super::Dashboard::fetch_guilds(client.users.clone()),
+                        |result| message::Dashboard::Guilds(result).into(),
+                    );
                 } else {
                     welcome.error = format!("Error: {:?}", result.err().unwrap())
                 }
