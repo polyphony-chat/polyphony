@@ -4,6 +4,7 @@ use chorus::instance::{ChorusUser, Instance};
 use chorus::types::LoginSchema;
 use chorus::UrlBundle;
 use iced::Command;
+use log::log;
 
 use crate::{Client, Message, Screen};
 

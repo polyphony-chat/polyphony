@@ -34,7 +34,11 @@ impl Dashboard {
         if let Some(cached) = client.cache.dashboard.clone() {
             cached
         } else {
-            Dashboard::default()
+            Dashboard {
+                instances: client.instances.clone(),
+                users: client.users.clone(),
+                ..Default::default()
+            }
         }
     }
 }
