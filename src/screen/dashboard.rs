@@ -4,9 +4,8 @@ use std::sync::{Arc, RwLock, Weak};
 use crate::{message, Client, Data, GlobalIdentifier, Message};
 use async_trait::async_trait;
 use chorus::gateway::Observer;
-use chorus::instance::{ChorusUser, Instance};
+use chorus::instance::ChorusUser;
 use chorus::types::{Guild, GuildUpdate};
-use chorus::UrlBundle;
 use iced::widget::{button, column, row, text};
 use iced::{Element, Renderer};
 
@@ -56,7 +55,7 @@ impl Dashboard {
 
 #[derive(Debug)]
 struct GuildAddObserver {
-    client: Arc<RwLock<Client>>,
+    pub data: Arc<RwLock<Data>>,
 }
 #[derive(Debug)]
 pub struct GuildUpdateObserver {
@@ -64,7 +63,7 @@ pub struct GuildUpdateObserver {
 }
 #[derive(Debug)]
 struct GuildRemoveObserver {
-    client: Weak<RwLock<Client>>,
+    pub data: Weak<RwLock<Data>>,
 }
 
 #[async_trait]
