@@ -6,13 +6,20 @@ use std::fmt::Display;
 use std::sync::{Arc, RwLock};
 
 use chorus::instance::{ChorusUser, Instance};
-use chorus::types::Snowflake;
+use chorus::types::{Guild, Snowflake};
 use chorus::UrlBundle;
+use env_logger::Builder;
 use iced::widget::container;
 use iced::{Application, Command, Element, Length, Settings};
+use log::info;
 
 #[tokio::main]
 async fn main() -> iced::Result {
+    let mut builder = Builder::new();
+    builder.filter_level(log::LevelFilter::Off);
+    builder.filter_module("polyphony_native", log::LevelFilter::Trace);
+    builder.init();
+    info!("Starting the Client");
     Client::run(Settings::default())
 }
 
@@ -23,7 +30,6 @@ pub type GlobalIdentifier = (UrlBundle, Snowflake);
 pub struct Client {
     pub data: Arc<RwLock<Data>>,
     pub screen: Screen,
-    pub cache: Cache,
 }
 
 #[derive(Debug, Default)]
@@ -31,6 +37,8 @@ pub struct Data {
     pub instances: HashMap<UrlBundle, Instance>,
     pub url_to_bundle: HashMap<String, UrlBundle>,
     pub users: HashMap<GlobalIdentifier, ChorusUser>,
+    pub dashboard: Option<screen::Dashboard>,
+    pub guilds: HashMap<GlobalIdentifier, Guild>,
 }
 
 impl Data {
@@ -44,18 +52,11 @@ impl Data {
     }
 }
 
-#[derive(Debug, Default)]
-pub struct Cache {
-    pub dashboard: Option<screen::Dashboard>,
-    pub messages: HashMap<GlobalIdentifier, Vec<Message>>,
-}
-
 impl Default for Client {
     fn default() -> Self {
         Self {
             screen: Screen::Welcome(screen::Welcome::default()),
             data: Arc::new(RwLock::new(Data::default())),
-            cache: Default::default(),
         }
     }
 }

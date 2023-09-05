@@ -1,7 +1,5 @@
-use std::collections::HashMap;
 use std::sync::{Arc, RwLock};
 
-use chorus::instance::ChorusUser;
 use chorus::types::Guild;
 use iced::Command;
 
@@ -11,7 +9,7 @@ use crate::{screen, Client, Data, GlobalIdentifier, Message, Screen};
 pub enum Dashboard {
     ToLogin,
     ReceivedGuilds(Vec<(GlobalIdentifier, Guild)>),
-    ReceivedGuildUpdate((GlobalIdentifier, Guild), GuildUpdateType),
+    ReceivedGuildUpdate((GlobalIdentifier, Option<Guild>), GuildUpdateType),
 }
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, Copy)]
@@ -34,7 +32,7 @@ impl Dashboard {
         };
         match message {
             Self::ToLogin => {
-                client.cache.dashboard = Some(dash.clone());
+                client.data.write().unwrap().dashboard = Some(dash.clone());
                 client.screen = Screen::Welcome(screen::Welcome::default())
             }
             Self::ReceivedGuilds(result) => dash.guilds = result,

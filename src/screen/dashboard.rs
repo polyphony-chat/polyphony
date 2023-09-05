@@ -1,11 +1,10 @@
-use std::collections::HashMap;
-use std::sync::{Arc, RwLock, Weak};
+use std::sync::{Arc, RwLock};
 
 use crate::{message, Client, Data, GlobalIdentifier, Message};
 use async_trait::async_trait;
 use chorus::gateway::Observer;
 use chorus::instance::ChorusUser;
-use chorus::types::{Guild, GuildUpdate};
+use chorus::types::{Guild, GuildCreate, GuildCreateDataOption, GuildDelete, GuildUpdate};
 use iced::widget::{button, column, row, text};
 use iced::{Element, Renderer};
 
@@ -42,7 +41,7 @@ impl Dashboard {
     }
 
     pub fn get_cache(client: &Client) -> Self {
-        if let Some(cached) = client.cache.dashboard.clone() {
+        if let Some(cached) = client.data.read().unwrap().dashboard.clone() {
             cached
         } else {
             Dashboard {
@@ -53,21 +52,15 @@ impl Dashboard {
     }
 }
 
+// TODO: i wrongly thought that i couldn't make all of these into just one struct, because i thought that any given struct can only have functions with unique names. however, if it's trait impls, this isn't the case, because the caller can specify which trait to call a certain function from.
+
 #[derive(Debug)]
-struct GuildAddObserver {
+pub struct GuildUpdatesObserver {
     pub data: Arc<RwLock<Data>>,
-}
-#[derive(Debug)]
-pub struct GuildUpdateObserver {
-    pub data: Arc<RwLock<Data>>,
-}
-#[derive(Debug)]
-struct GuildRemoveObserver {
-    pub data: Weak<RwLock<Data>>,
 }
 
 #[async_trait]
-impl Observer<GuildUpdate> for GuildUpdateObserver {
+impl Observer<GuildUpdate> for GuildUpdatesObserver {
     async fn update(&self, data: &GuildUpdate) {
         let _ = message::Dashboard::ReceivedGuildUpdate(
             (
@@ -81,9 +74,36 @@ impl Observer<GuildUpdate> for GuildUpdateObserver {
                         .clone(),
                     data.guild.id,
                 ),
-                data.guild.clone(),
+                Some(data.guild.clone()),
             ),
             message::dashboard::GuildUpdateType::Update,
         );
+    }
+}
+
+#[async_trait]
+impl Observer<GuildDelete> for GuildUpdatesObserver {
+    async fn update(&self, data: &GuildDelete) {
+        let read = self.data.read().unwrap();
+        let _ = message::Dashboard::ReceivedGuildUpdate(
+            (
+                (
+                    read.url_to_bundle.get(&data.source_url).unwrap().clone(),
+                    data.guild.id,
+                ),
+                None,
+            ),
+            message::dashboard::GuildUpdateType::Remove,
+        );
+    }
+}
+
+#[async_trait]
+impl Observer<GuildCreate> for GuildUpdatesObserver {
+    async fn update(&self, data: &GuildCreate) {
+        match data.d {
+            GuildCreateDataOption::UnavailableGuild(_) => todo!(),
+            GuildCreateDataOption::Guild(_) => todo!(),
+        }
     }
 }
