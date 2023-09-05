@@ -17,6 +17,7 @@ pub struct Dashboard {
 
 impl Dashboard {
     pub fn view(&'_ self, client: &Client) -> Element<crate::Message> {
+        log::debug!("Dashboard: called view()");
         let users = text::<Renderer>(format!(
             "Logged in as {:?}",
             self.data
@@ -41,9 +42,12 @@ impl Dashboard {
     }
 
     pub fn get_cache(client: &Client) -> Self {
+        log::debug!("Cache: Called get_cache()");
         if let Some(cached) = client.data.read().unwrap().dashboard.clone() {
+            log::debug!("Cache: Retrieving Dashboard from Cache");
             cached
         } else {
+            log::debug!("Cache: No Dashboard in Cache. Creating new screen::Dashboard");
             Dashboard {
                 data: client.data.clone(),
                 ..Default::default()
@@ -62,6 +66,7 @@ pub struct GuildUpdatesObserver {
 #[async_trait]
 impl Observer<GuildUpdate> for GuildUpdatesObserver {
     async fn update(&self, data: &GuildUpdate) {
+        log::debug!("Observer: Guild: Processing GuildUpdate");
         let _ = message::Dashboard::ReceivedGuildUpdate(
             (
                 (
@@ -84,6 +89,7 @@ impl Observer<GuildUpdate> for GuildUpdatesObserver {
 #[async_trait]
 impl Observer<GuildDelete> for GuildUpdatesObserver {
     async fn update(&self, data: &GuildDelete) {
+        log::debug!("Observer: Guild: Processing GuildDelete");
         let read = self.data.read().unwrap();
         let _ = message::Dashboard::ReceivedGuildUpdate(
             (
@@ -101,9 +107,35 @@ impl Observer<GuildDelete> for GuildUpdatesObserver {
 #[async_trait]
 impl Observer<GuildCreate> for GuildUpdatesObserver {
     async fn update(&self, data: &GuildCreate) {
-        match data.d {
-            GuildCreateDataOption::UnavailableGuild(_) => todo!(),
-            GuildCreateDataOption::Guild(_) => todo!(),
-        }
+        log::debug!("Observer: Guild: Processing GuildCreate");
+        let read = self.data.read().unwrap();
+        let _ = match &data.d {
+            GuildCreateDataOption::UnavailableGuild(unavailable) => {
+                log::debug!("Observer: Guild: GuildCreate: Guild is marked as Unavailable.");
+                message::Dashboard::ReceivedGuildUpdate(
+                    (
+                        (
+                            read.url_to_bundle.get(&data.source_url).unwrap().clone(),
+                            unavailable.id,
+                        ),
+                        None,
+                    ),
+                    message::dashboard::GuildUpdateType::Add,
+                )
+            }
+            GuildCreateDataOption::Guild(guild) => {
+                log::debug!("Observer: Guild: GuildCreate: Guild is marked as Unavailable.");
+                message::Dashboard::ReceivedGuildUpdate(
+                    (
+                        (
+                            read.url_to_bundle.get(&data.source_url).unwrap().clone(),
+                            guild.id,
+                        ),
+                        Some(guild.clone()),
+                    ),
+                    message::dashboard::GuildUpdateType::Add,
+                )
+            }
+        };
     }
 }
