@@ -1,3 +1,4 @@
+use crate::{message, screen};
 use chorus::errors::ChorusError;
 use chorus::instance::{ChorusUser, Instance};
 use chorus::types::LoginSchema;
@@ -23,8 +24,8 @@ impl From<Welcome> for Message {
 }
 
 impl Welcome {
-    pub fn update(state: &mut Client, message: Self) -> iced::Command<Message> {
-        let Screen::Welcome(welcome) = &mut state.screen else {
+    pub fn update(client: &mut Client, message: Self) -> iced::Command<Message> {
+        let Screen::Welcome(welcome) = &mut client.screen else {
             return Command::none();
         };
         match message {
@@ -52,11 +53,23 @@ impl Welcome {
             }
             Self::InstanceCreateResultGotten(result) => {
                 if let Ok(result) = result {
+                    let login = welcome.username_input.clone();
+                    let password = welcome.password_input.clone();
                     let result_clone = result.clone();
-                    state.instances.insert(result.urls.clone(), result.clone());
+                    client
+                        .data
+                        .write()
+                        .unwrap()
+                        .instances
+                        .insert(result.urls.clone(), result.clone());
+                    client
+                        .data
+                        .write()
+                        .unwrap()
+                        .url_bundle_to_urls(&result.urls); // TODO: When removing an instance from the clients' instance table, also clean this up
                     let login_schema: LoginSchema = LoginSchema {
-                        login: welcome.username_input.clone(),
-                        password: welcome.password_input.clone(),
+                        login,
+                        password,
                         ..Default::default()
                     };
                     let future = result_clone.login_account(login_schema);
@@ -70,15 +83,18 @@ impl Welcome {
             }
             Self::LoginRequestDone(result) => {
                 if let Ok(result) = result {
-                    state.users.insert(
+                    client.data.write().unwrap().users.insert(
                         (
                             result.belongs_to.read().unwrap().urls.clone(),
-                            result.object.read().unwrap().username.clone(),
-                            result.object.read().unwrap().discriminator.parse().unwrap(),
+                            result.object.read().unwrap().id,
                         ),
                         result.clone(),
                     );
-                    welcome.login_result = format!("Logged in: {:?}", result);
+                    client.screen = Screen::Dashboard(screen::Dashboard::get_cache(client));
+                    return Command::perform(
+                        super::Dashboard::fetch_guilds(client.data.clone()),
+                        |result| message::Dashboard::ReceivedGuilds(result).into(),
+                    );
                 } else {
                     welcome.error = format!("Error: {:?}", result.err().unwrap())
                 }

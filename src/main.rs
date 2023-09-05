@@ -3,33 +3,65 @@ mod screen;
 
 use std::collections::HashMap;
 use std::fmt::Display;
+use std::sync::{Arc, RwLock};
 
 use chorus::instance::{ChorusUser, Instance};
+use chorus::types::{Guild, Snowflake};
 use chorus::UrlBundle;
+use env_logger::Builder;
 use iced::widget::container;
 use iced::{Application, Command, Element, Length, Settings};
+use log::info;
 
 #[tokio::main]
 async fn main() -> iced::Result {
+    let mut builder = Builder::new();
+    builder.filter_level(log::LevelFilter::Off);
+    builder.filter_module("polyphony_native", log::LevelFilter::Trace);
+    builder.init();
+    info!("Starting the Client");
     Client::run(Settings::default())
 }
 
+/// (URLs, User-ID)
+pub type GlobalIdentifier = (UrlBundle, Snowflake);
+
+#[derive(Debug)]
 pub struct Client {
-    pub instances: HashMap<UrlBundle, Instance>,
-    pub users: HashMap<(UrlBundle, String, u16), ChorusUser>, // Urls, Username, Discrim
+    pub data: Arc<RwLock<Data>>,
     pub screen: Screen,
+}
+
+#[derive(Debug, Default)]
+pub struct Data {
+    pub instances: HashMap<UrlBundle, Instance>,
+    pub url_to_bundle: HashMap<String, UrlBundle>,
+    pub users: HashMap<GlobalIdentifier, ChorusUser>,
+    pub dashboard: Option<screen::Dashboard>,
+    pub guilds: HashMap<GlobalIdentifier, Guild>,
+}
+
+impl Data {
+    pub fn url_bundle_to_urls(&mut self, bundle: &UrlBundle) {
+        self.url_to_bundle
+            .insert(bundle.api.clone(), bundle.clone());
+        self.url_to_bundle
+            .insert(bundle.wss.clone(), bundle.clone());
+        self.url_to_bundle
+            .insert(bundle.cdn.clone(), bundle.clone());
+    }
 }
 
 impl Default for Client {
     fn default() -> Self {
         Self {
-            instances: Default::default(),
-            users: Default::default(),
             screen: Screen::Welcome(screen::Welcome::default()),
+            data: Arc::new(RwLock::new(Data::default())),
         }
     }
 }
 
+#[derive(Debug)]
 pub enum Screen {
     Login(screen::Login),
     Dashboard(screen::Dashboard),
@@ -78,14 +110,20 @@ impl Application for Client {
                 };
                 message::Welcome::update(self, message)
             }
-            _ => todo!(),
+            Message::Dashboard(message) => {
+                let Screen::Dashboard(_) = &mut self.screen else {
+                    return Command::none();
+                };
+                message::Dashboard::update(self, message)
+            }
+            _ => todo!("Implement this updatemessage in main.rs!"),
         }
     }
 
     fn view(&self) -> Element<'_, Self::Message, iced::Renderer<Self::Theme>> {
         let content = match &self.screen {
             Screen::Login(login) => login.view(),
-            Screen::Dashboard(dash) => dash.view(self.instances.clone(), self.users.clone()),
+            Screen::Dashboard(dash) => dash.view(self),
             Screen::Welcome(welcome) => welcome.view(),
         };
         container(content)
