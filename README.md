@@ -38,7 +38,7 @@
 
 ## About The Project
 
-![Product Mockup](https://github.com/polyphony-chat/design/blob/main/ui/client-mockup-draft.png?raw=true)
+![Product Mockup](https://raw.githubusercontent.com/polyphony-chat/design/main/ui/client-mockup-draft-neo.png)
 <cite>_A mockup of the Polyphony client._</cite>
 
 Polyphony will be a multi-instance, Discord/Spacebar API-compatible chat client, written in Rust, using Iced. The three goals of this project are ease of use, user experience and performance.
