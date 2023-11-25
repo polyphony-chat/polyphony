@@ -15,7 +15,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/polyphony-chat/polyphony">
-    <img src="https://github.com/polyphony-chat/design/blob/main/branding/polyphony-2-4.png?raw=true" alt="Logo" width="128" height="128">
+    <img src="https://github.com/polyphony-chat/branding/blob/main/logos/polyphony-2-5-round8bit.png?raw=true" alt="The Polyphony logo. a purple, square background with rounded edges. on this background, there are four vertically stacked, white lines. The lines each resemble a sine curve, although they are all shaped a little differently." width="128" height="128">
   </a>
 
 <h3 align="center">Polyphony</h3>
