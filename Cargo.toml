@@ -1,22 +1,9 @@
-[package]
-name = "polyphony-native"
-version = "0.1.0"
-edition = "2021"
-license = "GPL-3.0"
+[workspace]
+members = ["crates/polyphony-wasm", "crates/polyphony-tauri"]
+resolver = "2"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-iced = { version = "0.10", features = ["tokio"] }
-chorus = { path = "../chorus", features = ["client"] }
-tokio = { version = "1.32.0", features = ["rt-multi-thread"] }
-serde = { version = "1.0.188", features = ["derive", "rc"] }
-serde_json = "1.0.105"
-log = "0.4.20"
-async-trait = "0.1.73"
-env_logger = "0.10.0"
-
-[dev-dependencies]
-rusty-hook = "0.11.2"
-iced = { version = "0.10", features = ["debug"] }
-tokio = { version = "1.32.0", features = ["full"] }
+[profile.release]
+opt-level = 'z'
+lto = true
+codegen-units = 1
+panic = "abort"
