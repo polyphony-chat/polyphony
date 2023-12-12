@@ -6,6 +6,8 @@ use hashbrown::HashMap;
 use leptos::*;
 use log::*;
 
+use crate::GlobalIdentifier;
+
 #[component]
 pub fn Register() -> impl IntoView {
     let (mail, set_mail) = create_signal(String::new());
@@ -40,7 +42,7 @@ pub fn Register() -> impl IntoView {
     }
 }
 
-async fn register(input: &(String, String, String)) -> ChorusResult<ChorusUser> {
+async fn register(input: &(String, String, String)) -> ChorusResult<()> {
     let register_schema = RegisterSchema {
         username: input.2.clone(),
         password: Some(input.1.clone()),
@@ -76,8 +78,17 @@ async fn register(input: &(String, String, String)) -> ChorusResult<ChorusUser> 
     );
     let account = instance.register_account(register_schema).await;
     instance_store.update(|map| {
-        map.insert(urls, instance);
+        map.insert(urls.clone(), instance);
     });
     debug!("Got account with token {}", account.as_ref().unwrap().token);
-    account
+    if let Ok(account) = account {
+        let user_store = use_context::<RwSignal<HashMap<GlobalIdentifier, ChorusUser>>>().unwrap();
+        let id = account.object.read().unwrap().id;
+        user_store.update(move |map| {
+            map.insert((urls.clone(), id), account);
+        });
+        Ok(())
+    } else {
+        Err(account.unwrap_err())
+    }
 }
