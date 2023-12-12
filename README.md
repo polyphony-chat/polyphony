@@ -28,6 +28,9 @@
 
 </div>
 
+![Mockup of the 'Polyphony' client, set in dark purple hues. The bottom navigation bar displays connection to 2 instances, user '@Flori#7676' status on 'spacebar.chat', green 'online' status symbol, a 'coding' status, and 'Visual Studio code' playing. A left-side guild navigator hosts gray circles for guild previews, with one selected guild marked by a purple dot. A card-like guild preview on the right showcases the chosen 'Polyphony' guild, marked 'public' and 'verified', on a purple-blue gradient background. Beneath, a channel preview lists two categories, each with three channels coded by icons: 'welcome' (hashtag), 'announcements' (megaphone), and additional 'welcome' channels (hashtags). A centered search bar features the text 'search for anything' and an icon with three dots. At the bottom, a text input box labeled 'say something' is flanked by a paperclip and three-dots icons.](https://github.com/polyphony-chat/design/blob/main/ui/client-mockup-draft-neo.png?raw=true)
+*early mockup of the client, not indicative of the current state of the code.* 
+
 ## Setting up a dev environment
 
 Add wasm as a compilation target
