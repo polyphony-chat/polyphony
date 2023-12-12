@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--Copy ./public dir into dist to be able to link relatively from the dist-dir-->
+		<link data-trunk rel="copy-dir" href="./public/" />
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, height=device-height" />
+		<link rel="manifest" href="manifest.json" />
+		<title>Tauri + Yew App</title>
+
+		<link data-trunk rel="tailwind-css" href="/public/main.css" />
+		<script>
+			if ("serviceWorker" in navigator) {
+				navigator.serviceWorker.register("/sw.js");
+			}
+
+			var viewport = document.querySelector("meta[name=viewport]");
+			viewport.setAttribute(
+				"content",
+				viewport.content + ", height=" + window.innerHeight
+			),
+				viewport.setAttribute(
+					"content",
+					viewport.content + ", width=" + window.innerWidth
+				);
+		</script>
+	</head>
+	<body>
+		<noscript>
+			<p>
+				This page runs with WebAssembly and needs JavaScript to execute the
+				WebAssembly. Please allow JavaScript for this page.<br />
+				If you are concerned about privacy, you can view the data we collect
+				here: [placeholder]
+			</p>
+		</noscript>
+	</body>
+</html>
