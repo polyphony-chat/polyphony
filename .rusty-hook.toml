@@ -1,5 +1,0 @@
-[hooks]
-pre-commit = "cargo fmt -p polyphony-native && exit 0"
-
-[logging]
-verbose = true
