@@ -10,7 +10,7 @@
     <img src="https://github.com/polyphony-chat/branding/blob/main/logos/polyphony-2-5-round8bit.png?raw=true" alt="The Polyphony logo. a purple, square background with rounded edges. on this background, there are four vertically stacked, white lines. The lines each resemble a sine curve, although they are all shaped a little differently." width="128" height="128">
   </a>
 
-<h3 align="center">Polyphony Web</h3>
+<h3 align="center">Polyphony</h3>
 
   <p align="center">
     A multi-instance, cross-platform Discord/Spacebar API-compatible chat client, written in Rust using leptos and optionally Tauri.
