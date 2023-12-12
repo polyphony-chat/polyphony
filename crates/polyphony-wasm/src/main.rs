@@ -12,8 +12,9 @@ use crate::stores::ChorusStore;
 
 #[component]
 fn App() -> impl IntoView {
-    let instance_store = ChorusStore::default();
-    provide_context(instance_store.instances);
+    let chorus_store = ChorusStore::default();
+    provide_context(chorus_store.instances);
+    provide_context(chorus_store.users);
     debug!("Rendering the App view");
     view! {
         <Router>
