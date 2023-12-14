@@ -83,10 +83,12 @@ async fn register(input: &(String, String, String)) -> ChorusResult<()> {
     debug!("Got account with token {}", account.as_ref().unwrap().token);
     if let Ok(account) = account {
         let user_store = use_context::<RwSignal<HashMap<GlobalIdentifier, ChorusUser>>>().unwrap();
+        let current_user = use_context::<RwSignal<Option<GlobalIdentifier>>>().unwrap();
         let id = account.object.read().unwrap().id;
-        user_store.update(move |map| {
+        user_store.update(|map| {
             map.insert((urls.clone(), id), account);
         });
+        current_user.set(Some((urls.clone(), id)));
         Ok(())
     } else {
         Err(account.unwrap_err())

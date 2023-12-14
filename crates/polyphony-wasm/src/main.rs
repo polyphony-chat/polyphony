@@ -15,11 +15,13 @@ fn App() -> impl IntoView {
     let chorus_store = ChorusStore::default();
     provide_context(chorus_store.instances);
     provide_context(chorus_store.users);
+    provide_context(chorus_store.current_user);
     debug!("Rendering the App view");
     view! {
         <Router>
             <main>
                 <Routes>
+                    <Route path="/" view=|| view! { "welcome" }/>
                     <Route path="/register" view=Register/>
                     <Route path="/u" view=|| view! { "hi" }>
                         <Route path=":id" view=|| view! {"meow"}/>

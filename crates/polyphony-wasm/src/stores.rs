@@ -9,4 +9,5 @@ use crate::GlobalIdentifier;
 pub(crate) struct ChorusStore {
     pub(crate) instances: RwSignal<HashMap<UrlBundle, Instance>>,
     pub(crate) users: RwSignal<HashMap<GlobalIdentifier, ChorusUser>>,
+    pub(crate) current_user: RwSignal<Option<GlobalIdentifier>>,
 }
