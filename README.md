@@ -33,6 +33,10 @@
 
 ## Setting up a dev environment
 
+This repository uses Tauri 2.0.0-alpha for mobile support in the future. Tauri-generated mobile project
+files can be found under `crates/polyphony-tauri/gen/android` and `/apple` for Android and iOS 
+respectively.
+
 Add wasm as a compilation target
 
 ```bash
