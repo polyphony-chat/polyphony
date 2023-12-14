@@ -7,7 +7,7 @@ use leptos::*;
 use leptos_router::*;
 use log::*;
 
-use crate::app::Register;
+use crate::app::{Login, Register};
 use crate::stores::ChorusStore;
 
 #[component]
@@ -23,9 +23,7 @@ fn App() -> impl IntoView {
                 <Routes>
                     <Route path="/" view=|| view! { "welcome" }/>
                     <Route path="/register" view=Register/>
-                    <Route path="/u" view=|| view! { "hi" }>
-                        <Route path=":id" view=|| view! {"meow"}/>
-                    </Route>
+                    <Route path="/login" view=Login/>
                 </Routes>
             </main>
         </Router>

@@ -19,6 +19,7 @@ pub fn Register() -> impl IntoView {
         async move { register(&input).await }
     });
     debug!("Rendering Register component");
+    // TODO: Set an error if registering fails
     view! {
         <form on:submit=move |ev| {
             ev.prevent_default();
