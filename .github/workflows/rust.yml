@@ -15,11 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Clone spacebar server
       run: |
         git clone https://github.com/bitfl0wer/server.git
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
           node-version: 18
           cache: 'npm'
@@ -44,4 +44,3 @@ jobs:
           cargo build --verbose --all-features
           cargo test --verbose --all-features
         fi
-        
