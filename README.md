@@ -1,9 +1,7 @@
 <div align="center">
 
 [![Discord]][Discord-invite]
-[![Build][build-shield]][build-url]
-[![Issues][issues-shield]][issues-url]
-<img src="https://img.shields.io/static/v1?label=Status&message=Early%20Development&color=blue">
+<img src="https://img.shields.io/static/v1?label=Status&message=On%20hold&color=red">
 
 </br>
   <a href="https://github.com/polyphony-chat/polyphony">
